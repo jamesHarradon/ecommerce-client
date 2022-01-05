@@ -1,10 +1,10 @@
 import React from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-const Login = ({setUser}) => {
+const Login = ({setLoggedIn}) => {
 
     const navigate = useNavigate();
 
@@ -20,8 +20,10 @@ const Login = ({setUser}) => {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                setUser(true);
-                navigate('/products');
+                setLoggedIn(true);
+                //expires same time as jwt - 30mins
+                setTimeout(() => setLoggedIn(false), 1800000)
+                navigate('/');
             } else if (response.status === 403) {
                 alert('Login Unsuccessful. Please Try Again.')
             }
@@ -29,6 +31,14 @@ const Login = ({setUser}) => {
             navigate('/error');
         }
     }
+
+    // const handleGoogleLogin = async () => {
+    //     try {
+    //        await fetch('http://localhost:4000/auth/google');
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
     const formSchema = Yup.object().shape({
         email: Yup.string()
@@ -62,6 +72,8 @@ const Login = ({setUser}) => {
                 <button type='submit' className='login-btn'>Login</button>
 
             </form>
+
+            <a href='http://localhost:4000/auth/google'>Login With Google</a>
         </div>
     )
 }

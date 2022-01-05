@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 
 
-const Register = ({setUser}) => {
+const Register = ({setLoggedIn}) => {
     
     const navigate = useNavigate();
 
@@ -22,7 +22,9 @@ const Register = ({setUser}) => {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                setUser(true);
+                setLoggedIn(true);
+                //expires same time as jwt - 30mins
+                setTimeout(() => setLoggedIn(false), 1800000)
                 navigate('/products');
             } else if(response.status === 400) {
                 //if user already exists in the db
@@ -32,6 +34,14 @@ const Register = ({setUser}) => {
             }
         } catch (err) {
             navigate('/error');
+        }
+    }
+
+    const handleGoogleRegister = async () => {
+        try {
+            await fetch('http://localhost:4000/auth/google');
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -89,6 +99,8 @@ const Register = ({setUser}) => {
                 <button type='submit' className='register-btn'>Register</button>
                 
             </form>
+
+            <button onClick={handleGoogleRegister}>Register With Google</button>
         </div>
     )
 }

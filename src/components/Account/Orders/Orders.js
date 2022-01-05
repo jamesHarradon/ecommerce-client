@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
 
@@ -17,7 +17,7 @@ const Orders = () => {
                 setOrders(null);
             }
         } catch (err) {
-            navigate('/error')
+            navigate('/error', { state: { err: err.message }})
         }
     }
 
@@ -28,7 +28,7 @@ const Orders = () => {
     return (
         <div>
             <h1>Orders</h1>
-            {}
+            
         </div>
     )
 }
