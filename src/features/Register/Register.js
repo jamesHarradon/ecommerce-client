@@ -1,14 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+
+import { setUserId } from "../../userSlice";
 
 
 
 const Register = ({setLoggedIn}) => {
     
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleRegistration = async (data) => {
         try {
@@ -22,9 +26,9 @@ const Register = ({setLoggedIn}) => {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                setLoggedIn(true);
+                
                 //expires same time as jwt - 30mins
-                setTimeout(() => setLoggedIn(false), 1800000)
+                setTimeout(() => dispatch(setUserId(response.id)), 1800000)
                 navigate('/products');
             } else if(response.status === 400) {
                 //if user already exists in the db

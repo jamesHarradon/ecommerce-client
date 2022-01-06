@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import Searchbar from "../../features/searchbar/Searchbar"
 
 
-export default function Navbar({loggedIn}) {
+export default function Navbar({userId}) {
 
     // try to refactor below
-    if (loggedIn) {
+    if (userId) {
         return (
             <div className='navbar'>
             <Link to='/'>

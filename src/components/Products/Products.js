@@ -5,7 +5,7 @@ import { getProducts, selectProducts } from "./productsSlice";
 
 import Product from "../Product/Product";
 
-const Products = () => {
+const Products = ({ userId }) => {
 
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
@@ -18,7 +18,7 @@ const Products = () => {
 
     return (
         <div>
-            {products.map(product => <Product key={product.id} id={product.id} name={product.product_name} image={product.image} price={product.price_per_unit}/>)}
+            {products.map(product => <Product key={product.id} id={product.id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId}/>)}
         </div>
     )
 }

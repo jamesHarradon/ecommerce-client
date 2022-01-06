@@ -1,51 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getBasketProductsByCustId, selectBasketProducts} from './basketSlice'
+import BasketProducts from './BasketProducts';
 
 
 const Basket = ({userId}) => {
 
-    const [ basket, setBasket ] = useState([]);
-
-    const navigate = useNavigate();
-
-    const getBasket = async (data) => {
     
-        try {
-            const cartResponse = await fetch(`http://localhost:4000/cart/${userId}`, {credentials: 'include'});
-            if(cartResponse.ok) {
-                const cart = await cartResponse.json();
-                const cartId = cart.id;
-                const response = await fetch(`http://localhost:4000/cart/products/${userId}/${cartId}`, {credentials: 'include'});
-                if(response.ok) {
-                    const json = await response.json();
-                    return setBasket(json);
-                } else {
-                    //create new cart for customer
-                    return setBasket([]);
-                }
-            }
-            
-        } catch (err) {
-            //navigate('/error', { state: {err: err.message}})
-            console.log(err);
-        }
-    }
+    const dispatch = useDispatch();
+
+    const basketProducts = useSelector(selectBasketProducts);
+
 
     useEffect(() => {
-        getBasket();
+        dispatch(getBasketProductsByCustId(userId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
 
 
     return (
         <div>
             <h1>Basket</h1>
-            {basket.map(product => 
-                <div className="basket-product" key={product.product_name} id={product.product_name}>
-                    <p>{product.product_name}</p>
-                    <img src={product.image} alt={product.product_name}/>
-                    <p>{product.price_per_unit}</p>
-                </div>
-            )}
+            <div>
+                {basketProducts.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} />
+                )}
+            </div>
+            
+            
         </div>
     )
 }

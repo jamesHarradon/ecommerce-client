@@ -12,8 +12,6 @@ const ProductDetail = () => {
     const products = useSelector(selectProducts);
     const product = products.filter(prod => prod.id === parseInt(params.id));
     
-    
-    console.log(products);
 
     return (
         <div>

@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getOrders, selectOrders } from "./ordersSlice";
 
-const Orders = () => {
+const Orders = ({ userId }) => {
 
-    const [orders, setOrders] = useState();
-
-    const navigate = useNavigate();
-
-    const getOrders = async (data) => {
-        try {
-            const response = await fetch('http://localhost:4000/orders/history');
-            const json = response.json();
-            if(json) {
-                setOrders(json)
-            } else {
-                setOrders(null);
-            }
-        } catch (err) {
-            navigate('/error', { state: { err: err.message }})
-        }
-    }
+    const dispatch = useDispatch();
+    const orders = useSelector(selectOrders);
 
     useEffect(() => {
-        getOrders()
-    },[])
+        dispatch(getOrders(userId))
+    },[dispatch, userId])
 
     return (
         <div>
             <h1>Orders</h1>
+            {orders.map(order => 
+                <div key={order.id} id={order.id}>
+                    <p>Order ID: {order.id}</p>
+                    <p>Order Date/Time: {order.order_date.split('').splice(0, 19)} </p>
+                    <p>Total Cost: {order.total_cost} </p>
+                </div>
+            )}
             
         </div>
     )

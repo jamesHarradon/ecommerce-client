@@ -1,12 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-const Login = ({setLoggedIn}) => {
+import { setUserId } from "../../userSlice";
+
+const Login = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async (data) => {
         try {
@@ -20,9 +24,10 @@ const Login = ({setLoggedIn}) => {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                setLoggedIn(true);
+                const id = await response.json()
+                dispatch(setUserId(id))
                 //expires same time as jwt - 30mins
-                setTimeout(() => setLoggedIn(false), 1800000)
+                setTimeout(() => dispatch(setUserId(null)), 1800000)
                 navigate('/');
             } else if (response.status === 403) {
                 alert('Login Unsuccessful. Please Try Again.')
