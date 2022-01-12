@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  
 }
 
 .navbar-container {
@@ -34,8 +35,19 @@
 #main {
   position: relative;
   top: 100px;
+  padding-bottom: 50px;
   
 }
+
+.form-container {
+  margin: 0px auto;
+  width: 30%;
+  
+}
+.change-password-form {
+  text-align: right;
+}
+
 
 .App-link {
   color: rgb(112, 76, 182);

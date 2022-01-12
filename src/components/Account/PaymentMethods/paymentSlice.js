@@ -21,7 +21,7 @@ const paymentSlice = createSlice({
             state.hasFailed = false;
         },
         [getPaymentMethod.fulfilled]: (state, action) => {
-            state.paymentMethod = [action.payload];
+            state.paymentMethod = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },

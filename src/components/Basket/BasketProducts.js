@@ -10,7 +10,7 @@ const BasketProducts = ({id, name, image, price, userId, guestId, guestBasket })
     const dispatch = useDispatch();
 
     useEffect(() => {
-        localStorage.setItem(guestId, JSON.stringify(guestBasket));
+        if (guestId) localStorage.setItem(guestId, JSON.stringify(guestBasket));
     },[guestBasket, guestId])
 
     const removeGuestBasketProductHandler = () => {
@@ -28,8 +28,9 @@ const BasketProducts = ({id, name, image, price, userId, guestId, guestBasket })
             const cartId = cart.id;
             await fetch(`http://localhost:4000/api/cart/products/delete/${userId}/${cartId}/${id}`, {method: 'DELETE', credentials: 'include'});
             // gets basket data
-            dispatch(getBasketProductsByCustId(userId));
             dispatch(getBasketByCustId(userId));
+            dispatch(getBasketProductsByCustId(userId));
+            
             
         } catch (err) {
             console.log(err)

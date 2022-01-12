@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import { setGuestId, setGuestBasket } from "../../guestSlice";
 import { getBasketProductsByCustId } from "../Basket/basketProductsSlice";
+import { getBasketByCustId } from "../Basket/basketSlice";
 
 
 
@@ -24,17 +25,31 @@ const Product = ({id, name, price, quantity, image, description, userId, guestId
     
     const addToUserBasketHandler = async() => {
         try {
+            console.log('called')
+            let cartId;
             const response = await fetch(`http://localhost:4000/api/cart/${userId}`, {credentials: 'include'});
             const cart = await response.json();
-            const cartId = cart.id;
+            console.log(cart);
+            if (cart) {
+                console.log(cart.id)
+                cartId = cart.id;
+            } else {
+                const newCartResponse = await fetch(`http://localhost:4000/api/cart/new/${userId}`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const newCart = await newCartResponse.json();
+                cartId = newCart.id;
+            }
+            
             await fetch(`http://localhost:4000/api/cart/products/add/${userId}/${cartId}/${id}`, {method: 'POST', credentials: 'include'});
+            dispatch(getBasketByCustId(userId));
             dispatch(getBasketProductsByCustId(userId));
         } catch (err) {
             console.log(err)
         }
     }
 
-    
 
     const addToBasketHandler = () => {
         if (!userId) {

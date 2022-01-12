@@ -26,7 +26,7 @@ const contactSlice = createSlice({
             state.hasFailed = false;
         },
         [getContacts.fulfilled]: (state, action) => {
-            state.contacts = [action.payload];
+            state.contacts = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },

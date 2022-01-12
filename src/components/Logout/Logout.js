@@ -12,7 +12,6 @@ const Logout = ({guestId}) => {
         try {
             const response = await fetch('http://localhost:4000/api/auth/logout', {method: 'POST', credentials: 'include'});
             if(response.ok) {
-                localStorage.removeItem(guestId);
                 dispatch(logout()); 
                 // the above 'logout' action is set in userSlice but defined in store.
                 // when dispatched, it resets all redux state to initial state

@@ -18,7 +18,10 @@ const Basket = ({userId, guestId, guestBasket }) => {
 
     guestId ? basketToMap = guestBasket : basketToMap = basketProducts;
 
-    const guestTotal = guestBasket.map(product => product.price_per_unit.split('').splice(1).join('')).reduce((cont, champ) => parseFloat(cont) + parseFloat(champ));
+    let guestTotal;
+    if (guestBasket.length > 0) {
+        guestTotal = guestBasket.map(product => product.price_per_unit.split('').splice(1).join('')).reduce((cont, champ) => parseFloat(cont) + parseFloat(champ));
+    }
     
     useEffect(() => {
         if (userId) {
@@ -31,11 +34,12 @@ const Basket = ({userId, guestId, guestBasket }) => {
     return (
         <div>
             <h1>Basket</h1>
-            { basket && basket.map(data => <h3>Total: {data.total_cost}</h3>)}
-            { guestId && <h3>Total: £{guestTotal}</h3>}
+            { basketProducts.length > 0 && <h3 key='total'>Total: {basket.total_cost}</h3>}
+            { guestBasket.length > 0 && <h3>Total: £{guestTotal}</h3>}
             <div>
-                {basketToMap && basketToMap.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} guestId={guestId} guestBasket={guestBasket} />
+                {basketToMap.length > 0 && basketToMap.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} guestId={guestId} guestBasket={guestBasket} />
                 )}
+                {basketToMap.length < 1 && <h2>Your Basket is Empty</h2>}
             </div>
         </div>
     )

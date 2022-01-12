@@ -23,7 +23,7 @@ const Register = ({ guestBasket }) => {
         dispatch(getBasketByCustId(id))
         dispatch(getBasketProductsByCustId(id))
         //expires same time as jwt - 30mins - resets redux state to initial
-        setTimeout(() => dispatch(logout()), 1800000)
+        setTimeout(() => navigate('/logout'), 1800000)
     }
     
     const handleRegistration = async (data) => {
@@ -78,7 +78,6 @@ const Register = ({ guestBasket }) => {
 
     const formOptions = {resolver: yupResolver(formSchema)};
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
-
 
     return (
         <div className='register'>

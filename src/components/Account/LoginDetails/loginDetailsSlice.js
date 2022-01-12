@@ -21,7 +21,7 @@ const loginDetailsSlice = createSlice({
             state.hasFailed = false;
         },
         [getLoginDetails.fulfilled]: (state, action) => {
-            state.loginDetails = [action.payload];
+            state.loginDetails = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },

@@ -20,7 +20,7 @@ export default function Navbar({userId, guestBasket}) {
                     </Link>
                     <Searchbar/>
                     <Link to='/account'><p>Account</p></Link>
-                    <Link to='/basket'><p>Basket&#40;{basketProducts.length}&#41;</p></Link>
+                    <Link to='/basket'><p>Basket&#40;{basketProducts?.length}&#41;</p></Link>
                     <Link to='/logout'><p>Logout</p></Link>
                 </div>
             </div>
@@ -35,7 +35,7 @@ export default function Navbar({userId, guestBasket}) {
                     <Searchbar/>
                     <Link to='/register'><p>Register</p></Link>
                     <Link to='/login'><p>Login</p></Link>
-                    <Link to='/basket'><p>Basket&#40;{guestBasket.length}&#41;</p></Link>
+                    <Link to='/basket'><p>Basket&#40;{guestBasket?.length}&#41;</p></Link>
                 </div>
             </div>
         )

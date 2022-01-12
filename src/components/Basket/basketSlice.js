@@ -21,7 +21,7 @@ const basketSlice = createSlice({
             state.hasFailed = false;
         },
         [getBasketByCustId.fulfilled]: (state, action) => {
-            state.basket = [action.payload];
+            state.basket = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },
