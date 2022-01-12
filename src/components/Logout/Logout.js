@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserId } from "../../userSlice";
+import { setUserId, logout } from "../../userSlice";
+
+
 
 // add logout fetch to this to get rid of token
-const Logout = () => {
+const Logout = ({guestId}) => {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/auth/logout', {method: 'POST', credentials: 'include'});
+            const response = await fetch('http://localhost:4000/api/auth/logout', {method: 'POST', credentials: 'include'});
             if(response.ok) {
-                dispatch(setUserId(null));
+                localStorage.removeItem(guestId);
+                dispatch(logout()); 
+                // the above 'logout' action is set in userSlice but defined in store.
+                // when dispatched, it resets all redux state to initial state
+                
             } 
 
         } catch (err) {

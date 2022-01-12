@@ -2,11 +2,39 @@
   text-align: center;
 }
 
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
+  background-color: white;
+  border-top: 6px solid rgb(182, 221, 221);
+  border-bottom: 6px solid rgb(182, 221, 221);
+  
+}
+
+.navbar p {
+  text-decoration: none;
+}
+
+/* #searchbar, .submit {
+  padding: 5px;
+  margin: 0;
+} */
+
+
+#main {
+  position: relative;
+  top: 100px;
+  
 }
 
 .App-link {

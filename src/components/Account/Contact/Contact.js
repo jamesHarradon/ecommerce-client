@@ -16,7 +16,7 @@ const Contact = ({userId}) => {
     return (
         <div>
             <h1>Contact</h1>
-            {contacts.length > 0 && contacts.map(contact => 
+            {contacts && contacts.map(contact => 
                 <div className="contact" key={contact.id} id={contact.id}>
                     <p>{contact.first_name} {contact.last_name}</p>
                     <p>{contact.address_line1}</p>

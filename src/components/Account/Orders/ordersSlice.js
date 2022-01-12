@@ -2,10 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const  getOrders = createAsyncThunk(
     'orders/getOrders', async (id) => {
-        const response = await fetch(`http://localhost:4000/orders/history/${id}`, {credentials: 'include'});
-        console.log(response)
+        const response = await fetch(`http://localhost:4000/api/orders/history/${id}`, {credentials: 'include'});
         const json = await response.json();
-        console.log(json)
         return json;
     }
 )

@@ -2,10 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getContacts = createAsyncThunk(
     'contacts/getContacts', async (id) => {
-        const response = await fetch(`http://localhost:4000/customer/data/${id}`, {credentials: 'include'});
-        console.log(response)
+        const response = await fetch(`http://localhost:4000/api/customer/data/${id}`, {credentials: 'include'});
         const json = await response.json();
-        console.log(json)
         return json;
     }
 )
@@ -17,6 +15,11 @@ const contactSlice = createSlice({
         hasFailed: false,
         contacts: []
     },
+    reducers: {
+        deleteContacts(state, action) {
+            state.contacts = action.payload
+        },
+    },  
     extraReducers: {
         [getContacts.pending]: (state, action) => {
             state.isLoading = true;
@@ -30,9 +33,11 @@ const contactSlice = createSlice({
         [getContacts.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasFailed = true;
-        }
+        },  
     }
 })
+
+export const { deleteContact } = contactSlice.actions;
 
 export const selectIsLoading = (state) => state.contacts.isLoading;
 export const selectHasFailed = (state) => state.contacts.hasFailed;

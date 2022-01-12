@@ -14,8 +14,8 @@ const PaymentMethods = ({userId}) => {
     return (
         <div>
             <h1>Payment Methods</h1>
-            {paymentMethod.map(card => 
-                <div>
+            {paymentMethod && paymentMethod.map(card => 
+                <div key={card.id}>
                    <p>{card.card_type}</p> 
                    <p>{card.card_number}</p> 
                    <p>{card.expiry_date.split('').splice(0, 7)}</p> 

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getPaymentMethod = createAsyncThunk(
     'paymentMethod/getPaymentMethod', async (id) => {
-        const response = await fetch(`http://localhost:4000/payments/data/${id}`, {credentials: 'include'});
+        const response = await fetch(`http://localhost:4000/api/payments/data/${id}`, {credentials: 'include'});
         const json = await response.json();
         return json;
     }

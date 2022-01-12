@@ -14,8 +14,8 @@ const LoginDetails = ({userId}) => {
     return (
         <div>
             <h1>Login Details</h1>
-            {loginDetails.map(detail => 
-                <div>
+            {loginDetails && loginDetails.map(detail => 
+                <div key={detail.contact_id}>
                     <p>Login Email: {detail.email}</p>
                 </div>
             )}

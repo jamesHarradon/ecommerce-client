@@ -1,20 +1,70 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { setUserId } from "../../userSlice";
+import { setUserId, setLoggedIn, logout } from "../../userSlice";
+import { getBasketByCustId } from "../Basket/basketSlice";
+import { getBasketProductsByCustId, selectBasketProducts } from "../Basket/basketProductsSlice";
+import { setGuestId, setGuestBasketToDB } from "../../guestSlice";
 
-const Login = () => {
+
+
+const Login = ({guestBasket}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const basketProducts = useSelector(selectBasketProducts)
+    
+    const guestBasketToDB = async (userId, guestBasket, basketProducts) => {
+        try {
+            let cartId;
+            const response = await fetch(`http://localhost:4000/api/cart/${userId}`, {credentials: 'include'});
+            const existingCart = await response.json();
+            
+            if (existingCart) {
+                cartId = existingCart.id;
+                console.log('Existing: ' + cartId)
+                // deletes products in current cart in db
+                basketProducts.forEach(async (product) => {
+                    await fetch(`http://localhost:4000/api/cart/products/delete/${userId}/${cartId}/${product.product_id}`, {method: 'DELETE', credentials: 'include'});
+                });  
+            } 
+            if (!existingCart) {
+                //creates new carts and gets cartId
+                const newCart = await fetch(`http://localhost:4000/api/cart/new/${userId}`, {method: 'POST', credentials: 'include'});
+                console.log(newCart);
+                cartId = newCart.id 
+            };
+            console.log(cartId)
+            //adds product to new cart in db
+            guestBasket.forEach(async (product) => {
+                await fetch(`http://localhost:4000/api/cart/products/add/${userId}/${cartId}/${product.product_id}`, {method: 'POST', credentials: 'include'});
+            });
+            
+        } catch (err) {
+            console.log(err);
+        }
+    } 
+
+    
+    const loginFunc = (id, guestBasket, basketProducts) => {
+        dispatch(setUserId(id))
+        dispatch(setLoggedIn(true));
+        if (guestBasket.length > 0) guestBasketToDB(id, guestBasket, basketProducts)
+        //if (guestBasket.length > 0) dispatch(setGuestBasketToDB(id, guestBasket, basketProducts))
+        dispatch(setGuestId(null));
+        dispatch(getBasketByCustId(id))
+        dispatch(getBasketProductsByCustId(id))
+        //expires same time as jwt - 30mins - resets redux state to initial
+        setTimeout(() => dispatch(logout()), 1800000)
+    }
 
     const handleLogin = async (data) => {
         try {
-            const response = await fetch('http://localhost:4000/auth/login', {
+            const response = await fetch('http://localhost:4000/api/auth/login', {
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',
@@ -25,14 +75,13 @@ const Login = () => {
             });
             if (response.ok) {
                 const id = await response.json()
-                dispatch(setUserId(id))
-                //expires same time as jwt - 30mins
-                setTimeout(() => dispatch(setUserId(null)), 1800000)
+                loginFunc(id, guestBasket, basketProducts);
                 navigate('/');
             } else if (response.status === 403) {
                 alert('Login Unsuccessful. Please Try Again.')
             }
         } catch (err) {
+            console.log(err);
             navigate('/error');
         }
     }

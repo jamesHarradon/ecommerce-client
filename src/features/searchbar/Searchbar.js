@@ -21,8 +21,8 @@ export default function Searchbar () {
     return (
         <div>
             <form onSubmit={onSubmitHandler}>
-                <input type='search' onChange={(e) => onChangeHandler(e)}></input>
-                <button type='submit'>Search</button>
+                <input id='searchbar' type='search' onChange={(e) => onChangeHandler(e)}></input>
+                <button className="submit" type='submit'>Search</button>
             </form>
         </div>
         

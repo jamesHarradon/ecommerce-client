@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const setUserId = createAsyncThunk(
     'userId/setUserId', async () => {
-        const response = await fetch(`http://localhost:4000/auth/id`, {credentials: 'include'});
+        const response = await fetch(`http://localhost:4000/api/auth/id`, {credentials: 'include'});
         if(response.ok) {
             const json = await response.json();
             return json;
@@ -18,7 +18,13 @@ const userSlice = createSlice({
     initialState: {
         isLoading: false,
         hasFailed: false,
-        userId: null
+        userId: null,
+        isLoggedIn: false,
+    },
+    reducers: {
+        setLoggedIn: (state, action) => { state.isLoggedIn = action.payload },
+        // see store for logout action
+        logout: state => {}
     },
     extraReducers: {
         [setUserId.pending]: (state, action) => {
@@ -40,20 +46,9 @@ const userSlice = createSlice({
 export const selectIsLoading = (state) => state.user.isLoading;
 export const selectHasFailed = (state) => state.user.hasFailed;
 export const selectUserId = (state) => state.user.userId;
+export const selectIsLoggedIn = (state) => state.user.isLoggedIn
+
+export const { logout, setLoggedIn } = userSlice.actions;
 
 export default userSlice.reducer;
 
-// reducer without fetch
-// const userSlice = createSlice({
-//     name: 'user',
-//     initialState: {
-//         id: null
-//     },
-//     reducers: {
-//         addUserId: (state, action) => state = action.payload
-//     }
-// })
-
-// export const { addUserId } = userSlice.actions;
-// export const userIdSelector = (state) => state.user.id;
-// export default userSlice.reducer

@@ -15,7 +15,7 @@ const Orders = ({ userId }) => {
     return (
         <div>
             <h1>Orders</h1>
-            {orders.map(order => 
+            {orders && orders.map(order => 
                 <div key={order.id} id={order.id}>
                     <p>Order ID: {order.id}</p>
                     <p>Order Date/Time: {order.order_date.split('').splice(0, 19)} </p>

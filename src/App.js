@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setUserId, selectUserId } from './userSlice';
+import { selectUserId } from './userSlice';
 
 import './App.css';
 import Navbar from './components/navbar/Navbar';
@@ -18,41 +18,42 @@ import Login from './components/Login/Login';
 import Register from './features/Register/Register';
 import ErrorPage from './components/Error/error';
 import Logout from './components/Logout/Logout';
+import { selectGuestId, selectGuestBasket } from './guestSlice';
+
 
 
 
 function App() {
 
-  const dispatch = useDispatch();
+  
   const userId = useSelector(selectUserId);
-
-  useEffect(() => {
-    dispatch(setUserId());  
-  },[dispatch])
+  const guestId = useSelector(selectGuestId);
+  const guestBasket = useSelector(selectGuestBasket);
 
   return (
     <Router>
       <div className="App">
         <div id='header'>
-          <Navbar userId={userId}/>
+          <Navbar userId={userId} guestBasket={guestBasket}/>
         </div>
-        <Routes>
-          <Route path='/' element={<Products userId={userId} />} />
-          <Route path='/products/:id' element={<ProductDetail />} />
-          <Route path='/account' element={<Account />} />
-          <Route path='/account/orders' element={<Orders userId={userId}/>} />
-          <Route path='/account/logindetails' element={<LoginDetails userId={userId} />} />
-          <Route path='/account/contact' element={<Contact userId={userId} />} />
-          <Route path='/account/paymentmethods' element={<PaymentMethods userId={userId} />} />
-          <Route path='/basket' element={<Basket userId={userId} />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/error' element={<ErrorPage />} />
-          <Route path='*' element={<div><p>Nothing Here!</p></div>} /> 
-        </Routes>
+        <div id='main'>
+          <Routes>
+            <Route path='/' element={<Products userId={userId} guestId={guestId} guestBasket={guestBasket} />} />
+            <Route path='/products/:id' element={<ProductDetail />} />
+            <Route path='/account' element={<Account />} />
+            <Route path='/account/orders' element={<Orders userId={userId}/>} />
+            <Route path='/account/logindetails' element={<LoginDetails userId={userId} />} />
+            <Route path='/account/contact' element={<Contact userId={userId} />} />
+            <Route path='/account/paymentmethods' element={<PaymentMethods userId={userId} />} />
+            <Route path='/basket' element={<Basket userId={userId} guestId={guestId} guestBasket={guestBasket} />} />
+            <Route path='/login' element={<Login guestBasket={guestBasket} />} />
+            <Route path='/logout' element={<Logout guestId={guestId} />} />
+            <Route path='/register' element={<Register guestBasket={guestBasket} />} />
+            <Route path='/error' element={<ErrorPage />} />
+            <Route path='*' element={<div><p>Nothing Here!</p></div>} /> 
+          </Routes>
         </div>
-      
+      </div>
     </Router>
   );
 }

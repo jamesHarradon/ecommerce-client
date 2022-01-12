@@ -4,19 +4,31 @@ import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { logout, setLoggedIn, setUserId } from "../../userSlice";
+import { setGuestBasketToDB, setGuestId } from "../../guestSlice";
+import { getBasketByCustId } from "../../components/Basket/basketSlice";
+import { getBasketProductsByCustId } from "../../components/Basket/basketProductsSlice";
 
-import { setUserId } from "../../userSlice";
 
-
-
-const Register = ({setLoggedIn}) => {
+const Register = ({ guestBasket }) => {
     
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch;
 
+    const loginFunc = (id, guestBasket) => {
+        dispatch(setUserId(id))
+        dispatch(setLoggedIn(true));
+        dispatch(setGuestId(null))
+        if (guestBasket.length > 0) dispatch(setGuestBasketToDB(id, guestBasket))
+        dispatch(getBasketByCustId(id))
+        dispatch(getBasketProductsByCustId(id))
+        //expires same time as jwt - 30mins - resets redux state to initial
+        setTimeout(() => dispatch(logout()), 1800000)
+    }
+    
     const handleRegistration = async (data) => {
         try {
-            const response = await fetch('http://localhost:4000/customer/register', { 
+            const response = await fetch('http://localhost:4000/api/customer/register', { 
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',
@@ -26,15 +38,12 @@ const Register = ({setLoggedIn}) => {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                
-                //expires same time as jwt - 30mins
-                setTimeout(() => dispatch(setUserId(response.id)), 1800000)
+                loginFunc(response.id, guestBasket)
                 navigate('/products');
             } else if(response.status === 400) {
                 //if user already exists in the db
                 alert('You already have an account, please login to continue');
                 navigate('/login');
-               
             }
         } catch (err) {
             navigate('/error');
