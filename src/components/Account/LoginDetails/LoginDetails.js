@@ -16,10 +16,9 @@ const LoginDetails = ({userId}) => {
 
     useEffect(() => {
         dispatch(getLoginDetails(userId))
-    },[dispatch, userId])
+    },[dispatch, userId, changePassword])
 
     const changePasswordHandler = async (data) => {
-        console.log('called')
         try {
             const response = await fetch(`http://localhost:4000/api/auth/change-password/${userId}`, {
                 method: 'PUT', 
@@ -69,7 +68,7 @@ const LoginDetails = ({userId}) => {
             <h1>Login Details</h1>
             {loginDetails && loginDetails.map(detail => 
                 <div key={detail.contact_id}>
-                    <p>Login Email: {detail.email}</p>
+                    <p>Email: {detail.email}</p>
                 </div>
             )}
             {!changePassword &&

@@ -1,9 +1,10 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
 import { setGuestId, setGuestBasket } from "../../guestSlice";
-import { getBasketProductsByCustId } from "../Basket/basketProductsSlice";
+import { setCartId } from "../../userSlice";
+import { getBasketProductsByCustId, selectBasketProducts } from "../Basket/basketProductsSlice";
 import { getBasketByCustId } from "../Basket/basketSlice";
 
 
@@ -12,6 +13,8 @@ import { getBasketByCustId } from "../Basket/basketSlice";
 const Product = ({id, name, price, quantity, image, description, userId, guestId, guestBasket }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const basketProducts = useSelector(selectBasketProducts);
 
     useEffect(() => {
         if (guestId) localStorage.setItem(guestId, JSON.stringify(guestBasket))  
@@ -21,43 +24,30 @@ const Product = ({id, name, price, quantity, image, description, userId, guestId
         if (!guestId) dispatch(setGuestId(nanoid()));
         let product = {product_id: id, product_name: name, price_per_unit: price, quantity: quantity, image: image, description: description };
         dispatch(setGuestBasket([...guestBasket, product]));
+        navigate('/basket')
     }
     
     const addToUserBasketHandler = async() => {
         try {
-            console.log('called')
-            let cartId;
             const response = await fetch(`http://localhost:4000/api/cart/${userId}`, {credentials: 'include'});
-            const cart = await response.json();
-            console.log(cart);
-            if (cart) {
-                console.log(cart.id)
-                cartId = cart.id;
+            if (response.ok) {
+                const cart = await response.json();
+                const cartId = cart.id;
+                await fetch(`http://localhost:4000/api/cart/products/add/${userId}/${cartId}/${id}`, {method: 'POST', credentials: 'include'});
+                navigate('/basket')
             } else {
-                const newCartResponse = await fetch(`http://localhost:4000/api/cart/new/${userId}`, {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                const newCart = await newCartResponse.json();
-                cartId = newCart.id;
+                throw new Error('System Error');
             }
-            
-            await fetch(`http://localhost:4000/api/cart/products/add/${userId}/${cartId}/${id}`, {method: 'POST', credentials: 'include'});
-            dispatch(getBasketByCustId(userId));
-            dispatch(getBasketProductsByCustId(userId));
         } catch (err) {
             console.log(err)
         }
     }
 
+    const addToBasketHandler = () => userId ? addToUserBasketHandler() : addToGuestBasketHandler();
 
-    const addToBasketHandler = () => {
-        if (!userId) {
-            return addToGuestBasketHandler();
-        } else {
-            return addToUserBasketHandler();
-        }
-    }
+    let basketToUse = guestId ? guestBasket : basketProducts;
+    
+
     return (
         <div key={id}>
             <Link to={`/products/${id}`}>
@@ -65,7 +55,11 @@ const Product = ({id, name, price, quantity, image, description, userId, guestId
                 <img className='product-image' src={image} alt={name}></img>
                 <h3>{price}</h3>
             </Link>
-            <button onClick={addToBasketHandler}>Add to Basket</button>
+            {basketToUse.some(product => product.product_id === id)
+            ? <p>Item Added to Basket</p>
+            : <button onClick={addToBasketHandler}>Add to Basket</button>
+            }
+            
         </div>
     )
 }

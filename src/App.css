@@ -69,3 +69,11 @@
 }
 
 
+.order {
+  margin: 40px auto;
+  border: 1px solid grey;
+  width: 50%;
+  box-shadow: 3px 3px 3px grey;
+}
+
+

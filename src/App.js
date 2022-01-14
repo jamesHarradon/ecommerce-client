@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectUserId } from './userSlice';
+import { selectCartId, selectUserId } from './userSlice';
 
 import './App.css';
 import Navbar from './components/navbar/Navbar';
@@ -18,6 +18,7 @@ import Login from './components/Login/Login';
 import Register from './features/Register/Register';
 import ErrorPage from './components/Error/error';
 import Logout from './components/Logout/Logout';
+import CheckoutSuccess from './components/Checkout/CheckoutSuccess';
 import { selectGuestId, selectGuestBasket } from './guestSlice';
 
 
@@ -27,6 +28,7 @@ function App() {
 
   
   const userId = useSelector(selectUserId);
+  const cartId = useSelector(selectCartId);
   const guestId = useSelector(selectGuestId);
   const guestBasket = useSelector(selectGuestBasket);
 
@@ -46,6 +48,7 @@ function App() {
             <Route path='/account/contact' element={<Contact userId={userId} />} />
             <Route path='/account/paymentmethods' element={<PaymentMethods userId={userId} />} />
             <Route path='/basket' element={<Basket userId={userId} guestId={guestId} guestBasket={guestBasket} />} />
+            <Route path='/checkout-success' element={<CheckoutSuccess userId={userId} cartId={cartId} />} />
             <Route path='/login' element={<Login guestId={guestId} guestBasket={guestBasket} />} />
             <Route path='/logout' element={<Logout guestId={guestId} />} />
             <Route path='/register' element={<Register guestBasket={guestBasket} />} />

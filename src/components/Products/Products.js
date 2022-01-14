@@ -10,6 +10,7 @@ const Products = ({ userId, guestId, guestBasket }) => {
 
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
+    
 
     useEffect(() => {
         dispatch(getProducts());

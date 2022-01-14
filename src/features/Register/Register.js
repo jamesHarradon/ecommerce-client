@@ -4,10 +4,14 @@ import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { logout, setLoggedIn, setUserId } from "../../userSlice";
+import { logout, setLoggedIn, setUserId, getNewCartId } from "../../userSlice";
 import { setGuestBasketToDB, setGuestId } from "../../guestSlice";
 import { getBasketByCustId } from "../../components/Basket/basketSlice";
 import { getBasketProductsByCustId } from "../../components/Basket/basketProductsSlice";
+import { getContacts } from "../../components/Account/Contact/contactSlice";
+import { getPaymentMethod } from "../../components/Account/PaymentMethods/paymentSlice";
+import { getLoginDetails } from "../../components/Account/LoginDetails/loginDetailsSlice";
+import { getOrders } from "../../components/Account/Orders/ordersSlice";
 
 
 const Register = ({ guestBasket }) => {
@@ -18,8 +22,13 @@ const Register = ({ guestBasket }) => {
     const loginFunc = (id, guestBasket) => {
         dispatch(setUserId(id))
         dispatch(setLoggedIn(true));
-        dispatch(setGuestId(null))
-        if (guestBasket.length > 0) dispatch(setGuestBasketToDB(id, guestBasket))
+        dispatch(setGuestId(null));
+        //account data
+        dispatch(getContacts(id));
+        dispatch(getLoginDetails(id));
+        dispatch(getOrders(id));
+        dispatch(getPaymentMethod(id));
+        guestBasket.length > 0 ? dispatch(setGuestBasketToDB(id, guestBasket)) : dispatch(getNewCartId(id))
         dispatch(getBasketByCustId(id))
         dispatch(getBasketProductsByCustId(id))
         //expires same time as jwt - 30mins - resets redux state to initial

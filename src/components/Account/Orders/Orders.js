@@ -13,10 +13,10 @@ const Orders = ({ userId }) => {
     },[dispatch, userId])
 
     return (
-        <div>
+        <div className='orders'>
             <h1>Orders</h1>
             {orders && orders.map(order => 
-                <div key={order.id} id={order.id}>
+                <div className='order' key={order.id} id={order.id}>
                     <p>Order ID: {order.id}</p>
                     <p>Order Date/Time: {order.order_date.split('').splice(0, 19)} </p>
                     <p>Total Cost: {order.total_cost} </p>

@@ -1,15 +1,31 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const setUserId = createAsyncThunk(
-    'userId/setUserId', async () => {
-        const response = await fetch(`http://localhost:4000/api/auth/id`, {credentials: 'include'});
-        if(response.ok) {
-            const json = await response.json();
-            return json;
-        } else {
-            return null;
-        }
-        
+
+
+export const getNewCartId= createAsyncThunk(
+    'cartId/getNewCartId', async (id) => {
+        try {
+            const newCartResponse = await fetch(`http://localhost:4000/api/cart/new/${id}`, {
+                method: 'POST',
+                credentials: 'include'
+            });
+            const newCart = await newCartResponse.json();
+            return newCart.id;
+        } catch (err) {
+            console.log(err);
+        } 
+    }
+)
+
+export const setCartId= createAsyncThunk(
+    'cartId/setCartId', async (id) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
+            const cart = await response.json();
+            return cart.id;
+        } catch (err) {
+            console.log(err);
+        } 
     }
 )
 
@@ -19,24 +35,39 @@ const userSlice = createSlice({
         isLoading: false,
         hasFailed: false,
         userId: null,
+        cartId: null,
         isLoggedIn: false,
     },
     reducers: {
+        setUserId: (state, action) => { state.userId = action.payload },
         setLoggedIn: (state, action) => { state.isLoggedIn = action.payload },
         // see store for logout action
         logout: state => {}
     },
     extraReducers: {
-        [setUserId.pending]: (state, action) => {
+        [setCartId.pending]: (state, action) => {
             state.isLoading = true;
             state.hasFailed = false;
         },
-        [setUserId.fulfilled]: (state, action) => {
-            state.userId = action.payload;
+        [setCartId.fulfilled]: (state, action) => {
+            state.cartId = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },
-        [setUserId.rejected]: (state, action) => {
+        [setCartId.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.hasFailed = true;
+        },
+        [getNewCartId.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasFailed = false;
+        },
+        [getNewCartId.fulfilled]: (state, action) => {
+            state.cartId = action.payload;
+            state.isLoading = false;
+            state.hasFailed = false;
+        },
+        [getNewCartId.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasFailed = true;
         }
@@ -46,9 +77,10 @@ const userSlice = createSlice({
 export const selectIsLoading = (state) => state.user.isLoading;
 export const selectHasFailed = (state) => state.user.hasFailed;
 export const selectUserId = (state) => state.user.userId;
-export const selectIsLoggedIn = (state) => state.user.isLoggedIn
+export const selectCartId = (state) => state.user.cartId;
+export const selectIsLoggedIn = (state) => state.user.isLoggedIn;
 
-export const { logout, setLoggedIn } = userSlice.actions;
+export const { setUserId, setLoggedIn, logout } = userSlice.actions;
 
 export default userSlice.reducer;
 

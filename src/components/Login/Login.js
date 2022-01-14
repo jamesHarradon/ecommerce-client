@@ -5,10 +5,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { setUserId, setLoggedIn, logout } from "../../userSlice";
+import { setUserId, setLoggedIn, logout, setCartId } from "../../userSlice";
 import { getBasketByCustId } from "../Basket/basketSlice";
 import { getBasketProductsByCustId, selectBasketProducts } from "../Basket/basketProductsSlice";
 import { setGuestId, setGuestBasketToDB, setGuestBasket } from "../../guestSlice";
+import { getContacts } from "../Account/Contact/contactSlice";
+import { getLoginDetails } from "../Account/LoginDetails/loginDetailsSlice";
+import { getOrders } from "../Account/Orders/ordersSlice";
+import { getPaymentMethod } from "../Account/PaymentMethods/paymentSlice";
 
 
 
@@ -49,6 +53,12 @@ const Login = ({guestId, guestBasket}) => {
     const loginFunc = (id, guestBasket, basketProducts) => {
         dispatch(setUserId(id))
         dispatch(setLoggedIn(true));
+        dispatch(setCartId(id));
+        //account data
+        dispatch(getContacts(id));
+        dispatch(getLoginDetails(id));
+        dispatch(getOrders(id));
+        dispatch(getPaymentMethod(id));
         if (guestBasket.length > 0) guestBasketToDB(id, guestBasket, basketProducts)
         localStorage.removeItem(guestId);
         dispatch(setGuestId(null));

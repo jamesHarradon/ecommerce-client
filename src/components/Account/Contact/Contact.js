@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -8,34 +8,18 @@ import { getContacts, selectContacts } from './contactSlice'
 
 const Contact = ({userId}) => {
 
+    const [ editContact, setEditContact ] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const contacts = useSelector(selectContacts);
 
     useEffect(() => {
         dispatch(getContacts(userId))
-        
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[dispatch, userId, editContact])
 
     const handleAddContact = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:4000/api/customer/contact/data/new/${userId}`, { 
-                method: 'POST', 
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            
-            if (response.ok) {
-                navigate('/account/contact');
-            }
-        } catch (err) {
-            navigate('/error');
-        }
+        navigate('/account/contact');
     }
 
     const formSchema = Yup.object().shape({
@@ -78,7 +62,6 @@ const Contact = ({userId}) => {
                     <p>{contact.post_code}</p>
                     <p>{contact.phone}</p>
                     <p>{contact.email}</p>
-                    <button>Edit</button>
                 </div>
             )}
             {!contacts &&

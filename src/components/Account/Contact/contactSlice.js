@@ -8,6 +8,28 @@ export const getContacts = createAsyncThunk(
     }
 )
 
+export const addContact = createAsyncThunk(
+    'contacts/addContacts', async (id) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/customer/contact/data/new/${userId}`, { 
+                method: 'POST', 
+                mode: 'cors',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            if (response.ok) {
+                navigate('/account/contact');
+            }
+        } catch (err) {
+            navigate('/error');
+        }
+    }
+)
+
 const contactSlice = createSlice({
     name: 'contacts',
     initialState: {
