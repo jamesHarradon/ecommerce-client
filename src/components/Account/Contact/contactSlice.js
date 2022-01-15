@@ -2,16 +2,24 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getContacts = createAsyncThunk(
     'contacts/getContacts', async (id) => {
-        const response = await fetch(`http://localhost:4000/api/customer/data/${id}`, {credentials: 'include'});
-        const json = await response.json();
-        return json;
-    }
-)
-
-export const addContact = createAsyncThunk(
-    'contacts/addContacts', async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/customer/contact/data/new/${userId}`, { 
+            const response = await fetch(`http://localhost:4000/api/customer/data/${id}`, {credentials: 'include'});
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            } else {
+                throw new Error('System Error')
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+)   
+
+export const addContacts = createAsyncThunk(
+    'contacts/addContacts', async (data, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/customer/contact/data/new/${data.userId}`, { 
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',
@@ -22,10 +30,13 @@ export const addContact = createAsyncThunk(
             });
             
             if (response.ok) {
-                navigate('/account/contact');
+                const json = await response.json();
+                return json;
+            } else {
+                rejectWithValue([]);
             }
         } catch (err) {
-            navigate('/error');
+            console.log(err)
         }
     }
 )
@@ -56,6 +67,20 @@ const contactSlice = createSlice({
             state.isLoading = false;
             state.hasFailed = true;
         },  
+        [addContacts.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasFailed = false;
+        },
+        [addContacts.fulfilled]: (state, action) => {
+            state.contacts = action.payload;
+            state.isLoading = false;
+            state.hasFailed = false;
+        },
+        [addContacts.rejected]: (state, action) => {
+            state.contacts = action.payload;
+            state.isLoading = false;
+            state.hasFailed = true;
+        }, 
     }
 })
 

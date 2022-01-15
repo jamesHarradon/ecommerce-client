@@ -15,13 +15,13 @@ export default function Navbar({userId, guestBasket}) {
         return (
             <div className="navbar-container">
                 <div className='navbar'>
-                    <Link to='/'>
+                    <Link className="link" to='/'>
                         <p>logo</p>
                     </Link>
                     <Searchbar/>
-                    <Link to='/account'><p>Account</p></Link>
-                    <Link to='/basket'><p>Basket&#40;{basketProducts?.length}&#41;</p></Link>
-                    <Link to='/logout'><p>Logout</p></Link>
+                    <Link className="link" to='/account'><p>Account</p></Link>
+                    <Link className="link" to='/basket'><p>Basket&#40;{basketProducts?.length}&#41;</p></Link>
+                    <Link className="link" to='/logout'><p>Logout</p></Link>
                 </div>
             </div>
         )
@@ -29,13 +29,13 @@ export default function Navbar({userId, guestBasket}) {
         return (
             <div className="navbar-container">
                 <div className='navbar'>
-                    <Link to='/'>
+                    <Link className="link" to='/'>
                         <p>logo</p>
                     </Link>
                     <Searchbar/>
-                    <Link to='/register'><p>Register</p></Link>
-                    <Link to='/login'><p>Login</p></Link>
-                    <Link to='/basket'><p>Basket&#40;{guestBasket?.length}&#41;</p></Link>
+                    <Link className="link" to='/register'><p>Register</p></Link>
+                    <Link className="link" to='/login'><p>Login</p></Link>
+                    <Link className="link" to='/basket'><p>Basket&#40;{guestBasket?.length}&#41;</p></Link>
                 </div>
             </div>
         )

@@ -14,8 +14,7 @@ const Products = ({ userId, guestId, guestBasket }) => {
 
     useEffect(() => {
         dispatch(getProducts());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    },[dispatch]);
 
     useEffect(() => {
         if(guestId) dispatch(setGuestBasket(JSON.parse(localStorage.getItem(guestId))))
@@ -23,8 +22,8 @@ const Products = ({ userId, guestId, guestBasket }) => {
 
 
     return (
-        <div>
-            {products.map(product => <Product key={product.id} id={product.id} guestId={guestId} name={product.product_name} price={product.price_per_unit} quantity={product.quantity} image={product.image} description={product.description}  userId={userId} guestBasket={guestBasket} />)}
+        <div className='products'>
+            {products.map(product => <Product key={product.id} productId={product.id} guestId={guestId} name={product.product_name} price={product.price_per_unit} quantity={product.quantity} image={product.image} description={product.description}  userId={userId} guestBasket={guestBasket} />)}
         </div>
     )
 }

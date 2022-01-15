@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { getContacts, selectContacts } from './contactSlice'
+import { addContacts, getContacts, selectContacts } from './contactSlice'
 
 const Contact = ({userId}) => {
 
@@ -18,18 +18,18 @@ const Contact = ({userId}) => {
         dispatch(getContacts(userId))
     },[dispatch, userId, editContact])
 
-    const handleAddContact = async (data) => {
-        navigate('/account/contact');
+    const handleAddContact = (data) => {
+        dispatch(addContacts({userId: userId, ...data}))
+        .then(() => navigate('/account/contact'))
+        .catch(() => alert('There was a problem adding contact'));
     }
 
     const formSchema = Yup.object().shape({
         address_line1: Yup.string()
         .required('Address Line 1 is required'),
         address_line2: Yup.string(),
-        town: Yup.string()
-        .required('Town is required'),
-        city: Yup.string()
-        .required('City is required'),
+        town_city: Yup.string()
+        .required('Town/City is required'),
         county: Yup.string()
         .required('County is required'),
         post_code: Yup.string()
@@ -56,8 +56,7 @@ const Contact = ({userId}) => {
                     <p>{contact.first_name} {contact.last_name}</p>
                     <p>{contact.address_line1}</p>
                     <p>{contact.address_line2}</p>
-                    <p>{contact.town}</p>
-                    <p>{contact.city}</p>
+                    <p>{contact.town_city}</p>
                     <p>{contact.county}</p>
                     <p>{contact.post_code}</p>
                     <p>{contact.phone}</p>
@@ -78,14 +77,9 @@ const Contact = ({userId}) => {
                         <div className='invalid-feedback'>{errors.address_line2?.message}</div>
 
                         <br></br>
-                        <label htmlFor="town">Town:</label>
-                        <input type='text' id='town' name='town' {...register('town')} className={`form-control ${errors.town ? 'is-invalid' : ''}`} ></input>
-                        <div className='invalid-feedback'>{errors.town?.message}</div>
-
-                        <br></br>
-                        <label htmlFor="city">City:</label>
-                        <input type='text' id='city' name='city' {...register('city')} className={`form-control ${errors.city ? 'is-invalid' : ''}`} ></input>
-                        <div className='invalid-feedback'>{errors.city?.message}</div>
+                        <label htmlFor="town_city">Town/City:</label>
+                        <input type='text' id='town_city' name='town_city' {...register('town_city')} className={`form-control ${errors.town_city ? 'is-invalid' : ''}`} ></input>
+                        <div className='invalid-feedback'>{errors.town_city?.message}</div>
 
                         <br></br>
                         <label htmlFor="county">County:</label>

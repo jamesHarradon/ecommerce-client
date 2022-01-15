@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProducts } from "../Products/productsSlice";
 
@@ -8,7 +8,7 @@ import { selectProducts } from "../Products/productsSlice";
 const ProductDetail = () => {
 
     const params = useParams();
-
+    const navigate = useNavigate();
     const products = useSelector(selectProducts);
     const product = products.filter(prod => prod.id === parseInt(params.id));
     
@@ -23,6 +23,7 @@ const ProductDetail = () => {
                     <p>{fProd.price_per_unit}</p>
                 </div>
             ))}
+            <button onClick={() => navigate('/')}>Back</button>
         </div>
     )
     

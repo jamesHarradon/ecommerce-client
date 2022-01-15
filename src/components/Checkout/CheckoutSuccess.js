@@ -1,7 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getNewCartId } from "../../userSlice";
+import { selectContacts } from "../Account/Contact/contactSlice";
 import { getOrders } from "../Account/Orders/ordersSlice";
 import { getBasketProductsByCustId } from "../Basket/basketProductsSlice";
 import { getBasketByCustId } from "../Basket/basketSlice";
@@ -11,6 +12,8 @@ const CheckoutSuccess = ({userId, cartId}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const contactData = useSelector(selectContacts);
+    const firstName = contactData[0].first_name;
 
     const onClickHandler = async () => {
         try {
@@ -37,6 +40,7 @@ const CheckoutSuccess = ({userId, cartId}) => {
     return (
         <div>
             <h1>Payment Successful</h1>
+            <p>Thank you for your purchase, {firstName}</p>
             <button onClick={onClickHandler}>Order Summary</button>
         </div>
 

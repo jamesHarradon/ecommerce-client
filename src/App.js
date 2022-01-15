@@ -47,7 +47,7 @@ function App() {
             <Route path='/account/logindetails' element={<LoginDetails userId={userId} />} />
             <Route path='/account/contact' element={<Contact userId={userId} />} />
             <Route path='/account/paymentmethods' element={<PaymentMethods userId={userId} />} />
-            <Route path='/basket' element={<Basket userId={userId} guestId={guestId} guestBasket={guestBasket} />} />
+            <Route path='/basket' element={<Basket userId={userId} guestId={guestId} guestBasket={guestBasket} cartId={cartId} />} />
             <Route path='/checkout-success' element={<CheckoutSuccess userId={userId} cartId={cartId} />} />
             <Route path='/login' element={<Login guestId={guestId} guestBasket={guestBasket} />} />
             <Route path='/logout' element={<Logout guestId={guestId} />} />

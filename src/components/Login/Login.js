@@ -119,15 +119,12 @@ const Login = ({guestId, guestBasket}) => {
     return (
         <div className='login-form'>
             <h1>Login</h1>
-            <p>Please login to continue</p>
             <form onSubmit={handleSubmit(handleLogin)}>
-                <label htmlFor="email">Email:</label>
-                <input type='email' id='email' name='email' {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} ></input>
+                <input type='email' id='email' name='email' placeholder="Email" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} ></input>
                 <div className='invalid-feedback'>{errors.email?.message}</div>
                 
                 <br></br>
-                <label htmlFor="password">Password:</label>
-                <input type='password' id='password' name='password' {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}></input>
+                <input type='password' id='password' name='password' placeholder="Password" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}></input>
                 <div className='invalid-feedback'>{errors.password?.message}</div>
 
                 <br></br>
@@ -135,7 +132,7 @@ const Login = ({guestId, guestBasket}) => {
 
             </form>
 
-            <a href='http://localhost:4000/auth/google'>Login With Google</a>
+            <a className="link" href='http://localhost:4000/auth/google'>Login With Google</a>
         </div>
     )
 }

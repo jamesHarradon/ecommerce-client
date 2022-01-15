@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { getPaymentMethod, selectPaymentMethod } from "./paymentSlice";
+import { addPaymentMethod, getPaymentMethod, selectPaymentMethod } from "./paymentSlice";
 import { DateTime } from 'luxon';
 
 const PaymentMethods = ({userId}) => {
@@ -19,23 +19,11 @@ const PaymentMethods = ({userId}) => {
     },[dispatch, userId, addCard]);
 
     const addCardHandler = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:4000/api/payments/data/new/${userId}`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            if (response.ok) {
-               setAddCard(false);
-            } else {
-                throw new Error('There was a problem adding card')
-            }
-        } catch (err) {
-            console.log(err);
-        }
+        dispatch(addPaymentMethod({userId: userId, ...data}))
+        .then(() => {
+            setAddCard(false);
+        })
+        .catch(() => alert('There was a problem adding payment data'))   
     }
 
     const formSchema = Yup.object().shape({

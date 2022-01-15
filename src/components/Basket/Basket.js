@@ -7,7 +7,7 @@ import BasketProducts from './BasketProducts';
 import { selectContacts } from "../Account/Contact/contactSlice";
 
 
-const Basket = ({userId, guestId, guestBasket }) => {
+const Basket = ({userId, guestId, guestBasket, cartId }) => {
 
     
     const dispatch = useDispatch();
@@ -59,18 +59,25 @@ const Basket = ({userId, guestId, guestBasket }) => {
         <div>
             <h1>Basket</h1>
             {userId && basketToUse.length > 0 &&
-                <button onClick={() => checkoutHandler(bodyToSend)}>Checkout</button>
+                <button className='checkout-btn' onClick={() => checkoutHandler(bodyToSend)}>Checkout</button>
             }
             {!userId &&
                 <p>Please Login/Register to Checkout</p>
             }
         
-            { basketProducts.length > 0 && <h3 key='total'>Total: {basket.total_cost}</h3>}
-            { guestBasket.length > 0 && <h3>Total: £{guestTotal}</h3>}
+            { basketProducts.length > 0 && 
+                <h3 key='total'>Total: {basket.total_cost}</h3>
+            }
+            { guestBasket.length > 0 && 
+                <h3>Total: £{guestTotal}</h3>
+            }
             <div>
-                {basketToUse.length > 0 && basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} guestId={guestId} guestBasket={guestBasket} />
+                {basketToUse.length > 0 && 
+                    basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} guestId={guestId} guestBasket={guestBasket} cartId={cartId} />
                 )}
-                {basketToUse.length < 1 && <h2>Your Basket is Empty</h2>}
+                {basketToUse.length < 1 && 
+                    <h2>Your Basket is Empty</h2>
+                }
             </div>
         </div>
     )

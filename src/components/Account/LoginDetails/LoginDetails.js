@@ -3,43 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { getLoginDetails, selectLoginDetails } from "./loginDetailsSlice";
+import { changePassword, getLoginDetails, selectChangePasswordSucceeded, selectLoginDetails } from "./loginDetailsSlice";
 import { useNavigate } from "react-router-dom";
 
 const LoginDetails = ({userId}) => {
     
-    const [ changePassword, setChangePassword ] = useState(false)
-
+    const [ changePasswordClick, setChangePasswordClick ] = useState(false);
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loginDetails = useSelector(selectLoginDetails);
 
     useEffect(() => {
         dispatch(getLoginDetails(userId))
-    },[dispatch, userId, changePassword])
+    },[dispatch, userId, changePasswordClick])
 
-    const changePasswordHandler = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:4000/api/auth/change-password/${userId}`, {
-                method: 'PUT', 
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            console.log(response)
-            if(response.ok) {
-                alert('Password Changed Successfully');
-                setChangePassword(false);
-            } else {
-                alert('There was a problem');
-            }
-        } catch (err) {
-            navigate('/error')
-        }
+    const changePasswordHandler = (data) => {
+        //dispatch returns a promise which you can manually reject in the thunk
+        dispatch(changePassword({userId, ...data}))
+        .then(() => {
+            alert('Password Changed Successfully');
+            setChangePasswordClick(false);
+        }).catch(() => alert('There was a problem. Password was not changed.'));
     }
+
 
     const formSchema = Yup.object().shape({
         current_password: Yup.string()
@@ -71,10 +58,10 @@ const LoginDetails = ({userId}) => {
                     <p>Email: {detail.email}</p>
                 </div>
             )}
-            {!changePassword &&
-            <button onClick={() => setChangePassword(true)}>Change Password</button>
+            {!changePasswordClick &&
+            <button onClick={() => setChangePasswordClick(true)}>Change Password</button>
             }
-            {changePassword && 
+            {changePasswordClick && 
             <div className='change-password-form'>
                 <form onSubmit={handleSubmit(changePasswordHandler)}>
                     <label htmlFor="current_password">Current Password:</label>

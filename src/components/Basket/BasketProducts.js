@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { getBasketProductsByCustId } from './basketProductsSlice'
+import { deleteBasketProducts, getBasketProductsByCustId } from './basketProductsSlice'
 import { getBasketByCustId } from "./basketSlice";
 import { setGuestBasket } from "../../guestSlice";
 
 
-const BasketProducts = ({id, name, image, price, userId, guestId, guestBasket }) => {
+const BasketProducts = ({id, name, image, price, userId, guestId, guestBasket, cartId }) => {
 
     const dispatch = useDispatch();
 
@@ -20,28 +20,20 @@ const BasketProducts = ({id, name, image, price, userId, guestId, guestBasket })
         dispatch(setGuestBasket(basket));
     }
 
-    
-    const removeUserBasketProductHandler = async () => {
-        try {
-            const response = await fetch(`http://localhost:4000/api/cart/${userId}`, {credentials: 'include'});
-            const cart = await response.json();
-            const cartId = cart.id;
-            await fetch(`http://localhost:4000/api/cart/products/delete/${userId}/${cartId}/${id}`, {method: 'DELETE', credentials: 'include'});
-            // gets basket data
+    const removeUserBasketProductHandler = (data) => {
+        dispatch(deleteBasketProducts(data))
+        .then(() => {
             dispatch(getBasketByCustId(userId));
             dispatch(getBasketProductsByCustId(userId));
-            
-            
-        } catch (err) {
-            console.log(err)
-        }
+        })
+        
     }
 
     const removeBasketProductHandler = () => {
         if (!userId) {
             return removeGuestBasketProductHandler()
         } else {
-            return removeUserBasketProductHandler()
+            return removeUserBasketProductHandler({userId: userId, productId: id, cartId: cartId})
         }
     }
 
