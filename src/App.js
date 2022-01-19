@@ -51,7 +51,7 @@ function App() {
             <Route path='/checkout-success' element={<CheckoutSuccess userId={userId} cartId={cartId} />} />
             <Route path='/login' element={<Login guestId={guestId} guestBasket={guestBasket} />} />
             <Route path='/logout' element={<Logout guestId={guestId} />} />
-            <Route path='/register' element={<Register guestBasket={guestBasket} />} />
+            <Route path='/register' element={<Register guestId={guestId} guestBasket={guestBasket} />} />
             <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<div><p>Nothing Here!</p></div>} /> 
           </Routes>

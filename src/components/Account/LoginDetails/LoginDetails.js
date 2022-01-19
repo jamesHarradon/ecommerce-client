@@ -51,7 +51,7 @@ const LoginDetails = ({userId}) => {
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
 
     return (
-        <div className='form-container'>
+        <div className='form'>
             <h1>Login Details</h1>
             {loginDetails && loginDetails.map(detail => 
                 <div key={detail.contact_id}>
@@ -64,21 +64,21 @@ const LoginDetails = ({userId}) => {
             {changePasswordClick && 
             <div className='change-password-form'>
                 <form onSubmit={handleSubmit(changePasswordHandler)}>
-                    <label htmlFor="current_password">Current Password:</label>
-                    <input type='password' id='current_password' name='current_password' {...register('current_password')} className={`form-control ${errors.current_password ? 'is-invalid' : ''}`}></input>
+                    
+                    <input type='password' id='current_password' name='current_password' placeholder="Current Password" {...register('current_password')} className={`form-control ${errors.current_password ? 'is-invalid' : ''}`}></input>
                     <div className='invalid-feedback'>{errors.current_password?.message}</div>
                     
-                    <label htmlFor="confirm_current_password">Confirm Current Password:</label>
-                    <input type='password' id='confirm_current_password' name='confirm_current_password' {...register('confirm_current_password')} className={`form-control ${errors.confirm_current_password ? 'is-invalid' : ''}`}></input>
+                    
+                    <input type='password' id='confirm_current_password' name='confirm_current_password' placeholder="Confirm Current Password" {...register('confirm_current_password')} className={`form-control ${errors.confirm_current_password ? 'is-invalid' : ''}`}></input>
                     <div className='invalid-feedback'>{errors.confirm_current_password?.message}</div>
 
                     <br></br>
-                    <label htmlFor="new_password">New Password:</label>
-                    <input type='password' id='new_password' name='new_password' {...register('new_password')} className={`form-control ${errors.new_password ? 'is-invalid' : ''}`}></input>
+                    
+                    <input type='password' id='new_password' name='new_password' placeholder="New Password" {...register('new_password')} className={`form-control ${errors.new_password ? 'is-invalid' : ''}`}></input>
                     <div className='invalid-feedback'>{errors.new_password?.message}</div>
                     
-                    <label htmlFor="confirm_new_password">Confirm New Password:</label>
-                    <input type='password' id='confirm_new_password' name='confirm_new_password' {...register('confirm_new_password')} className={`form-control ${errors.confirm_new_password ? 'is-invalid' : ''}`}></input>
+                    
+                    <input type='password' id='confirm_new_password' name='confirm_new_password' placeholder="Confirm New Password" {...register('confirm_new_password')} className={`form-control ${errors.confirm_new_password ? 'is-invalid' : ''}`}></input>
                     <div className='invalid-feedback'>{errors.confirm_new_password?.message}</div>
                     
                     <br></br>

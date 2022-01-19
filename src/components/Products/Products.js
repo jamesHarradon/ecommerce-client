@@ -23,7 +23,7 @@ const Products = ({ userId, guestId, guestBasket }) => {
 
     return (
         <div className='products'>
-            {products.map(product => <Product key={product.id} productId={product.id} guestId={guestId} name={product.product_name} price={product.price_per_unit} quantity={product.quantity} image={product.image} description={product.description}  userId={userId} guestBasket={guestBasket} />)}
+            {products.map(product => <Product key={product.id} productId={product.id} guestId={guestId} name={product.product_name} price={product.price_per_unit} image={product.image} description={product.description}  userId={userId} guestBasket={guestBasket} />)}
         </div>
     )
 }

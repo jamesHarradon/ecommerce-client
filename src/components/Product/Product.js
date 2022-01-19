@@ -10,7 +10,7 @@ import { getBasketByCustId } from "../Basket/basketSlice";
 
 
 
-const Product = ({productId, name, price, quantity, image, description, userId, guestId, guestBasket }) => {
+const Product = ({productId, name, price, image, description, userId, guestId, guestBasket }) => {
 
     const cartId = useSelector(selectCartId);
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Product = ({productId, name, price, quantity, image, description, userId, 
     
     const addToGuestBasketHandler = () => {
         if (!guestId) dispatch(setGuestId(nanoid()));
-        let product = {product_id: productId, product_name: name, price_per_unit: price, quantity: quantity, image: image, description: description };
+        let product = {product_id: productId, product_name: name, price_per_unit: price, quantity: 1, image: image, description: description };
         dispatch(setGuestBasket([...guestBasket, product]));
         navigate('/basket')
     }
@@ -39,7 +39,7 @@ const Product = ({productId, name, price, quantity, image, description, userId, 
 
     const addToBasketHandler = userId ? () => addToUserBasketHandler({userId: userId, cartId: cartId, productId: productId}) : () => addToGuestBasketHandler();
 
-    let basketToUse = guestId ? guestBasket : basketProducts;
+    let basketToUse = guestId ? guestBasket || [] : basketProducts || [];
     
     return (
         <div className='product' key={productId}>

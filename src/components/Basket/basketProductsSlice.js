@@ -28,6 +28,41 @@ export const addBasketProducts = createAsyncThunk(
     }
 );
 
+export const incrementBasketProduct = createAsyncThunk(
+    'basketProducts/incrementBasketProduct', async (data) => {
+        console.log(data);
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/products/increment/${data.userId}/${data.cartId}/${data.productId}`, {
+                method: 'PUT',
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+);
+
+export const decrementBasketProduct = createAsyncThunk(
+    'basketProducts/incrementBasketProduct', async (data) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/products/decrement/${data.userId}/${data.cartId}/${data.productId}`, {
+                method: 'PUT',
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+)
+
 export const deleteBasketProducts = createAsyncThunk(
     'basketProducts/deleteBasketProducts', async (data) => {
         try {
@@ -40,7 +75,7 @@ export const deleteBasketProducts = createAsyncThunk(
                 return json;
             }
             else {
-                throw new Error('System Error')
+                throw new Error('System Error');
             }
         } catch (err) {
             console.log(err);
@@ -92,6 +127,32 @@ const basketProductsSlice = createSlice({
             state.hasFailed = false;
         },
         [deleteBasketProducts.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.hasFailed = true;
+        },
+        [incrementBasketProduct.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasFailed = false;
+        },
+        [incrementBasketProduct.fulfilled]: (state, action) => {
+            state.basketProducts = action.payload;
+            state.isLoading = false;
+            state.hasFailed = false;
+        },
+        [incrementBasketProduct.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.hasFailed = true;
+        },
+        [decrementBasketProduct.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasFailed = false;
+        },
+        [decrementBasketProduct.fulfilled]: (state, action) => {
+            state.basketProducts = action.payload;
+            state.isLoading = false;
+            state.hasFailed = false;
+        },
+        [decrementBasketProduct.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasFailed = true;
         }

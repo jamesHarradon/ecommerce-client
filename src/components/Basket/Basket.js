@@ -5,6 +5,7 @@ import { getBasketProductsByCustId, selectBasketProducts} from './basketProducts
 import { getBasketByCustId, selectBasket } from "./basketSlice";
 import BasketProducts from './BasketProducts';
 import { selectContacts } from "../Account/Contact/contactSlice";
+import { selectIsLoggedIn } from "../../userSlice";
 
 
 const Basket = ({userId, guestId, guestBasket, cartId }) => {
@@ -15,10 +16,12 @@ const Basket = ({userId, guestId, guestBasket, cartId }) => {
     const basket = useSelector(selectBasket);
     const basketProducts = useSelector(selectBasketProducts);
     const contacts = useSelector(selectContacts);
-    const email = contacts[0].email;
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+    const email = isLoggedIn ? contacts[0].email : null;
     const bodyToSend = { products: basketProducts, email: email}
 
-    let basketToUse = guestId ? guestBasket : basketProducts;
+    let basketToUse = guestId ? guestBasket || [] : basketProducts || [];
     
     let guestTotal;
     if (guestBasket.length > 0) {
@@ -73,7 +76,7 @@ const Basket = ({userId, guestId, guestBasket, cartId }) => {
             }
             <div>
                 {basketToUse.length > 0 && 
-                    basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} userId={userId} guestId={guestId} guestBasket={guestBasket} cartId={cartId} />
+                    basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} quantity={product.quantity} userId={userId} guestId={guestId} guestBasket={guestBasket} cartId={cartId} />
                 )}
                 {basketToUse.length < 1 && 
                     <h2>Your Basket is Empty</h2>

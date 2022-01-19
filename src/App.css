@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Cairo', sans-serif;
   
 }
 
@@ -16,20 +17,24 @@
   align-items: center;
   justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
-  background-color: white;
-  border-top: 6px solid rgb(182, 221, 221);
-  border-bottom: 6px solid rgb(182, 221, 221);
+  color: white;
+  background-color: rgb(90, 155, 155);
   
+}
+
+.navbar .link, .link :visited {
+  text-decoration: none;
+  color: white;
 }
 
 .navbar p {
   text-decoration: none;
 }
 
-/* #searchbar, .submit {
+#searchbar, .submit {
   padding: 5px;
   margin: 0;
-} */
+}
 
 
 #main {
@@ -38,18 +43,29 @@
   padding-bottom: 50px;
 }
 
-.form-container {
-  margin: 0px auto;
+.form {
+  border: 1px solid rgb(223, 223, 223);
+  box-shadow: 3px 3px 3px rgb(223, 223, 223);
+  margin: 30px auto;
+  padding: 20px;
   width: 30%;
-  
 }
-.change-password-form {
-  text-align: right;
+
+
+.register-form-fields {
+  width: 50%;
+  margin: 10px auto;
+}
+
+
+
+.register-form-fields input {
+  margin: 10px 0px;
 }
 
 
 .App-link {
-  color: rgb(112, 76, 182);
+  color: white;
 }
 
 .product-image {
@@ -62,13 +78,39 @@
   height: auto;
 }
 
+.basket-product {
+  /* display: grid;
+  grid-template-areas: 
+    'picture' 'name'
+    'picture' 'price'
+    'picture' 'button';
+  grid-gap: 20px; */
+
+}
+
 .basket-product img {
-  width: 100px;
-  height: auto;
+  width: auto;
+  height: 150px;
+  grid-area: picture;
+  
+}
+
+#product-name {
+  grid-area: name;
+  
+}
+
+#product-price {
+  grid-area: price;
+  
+}
+
+.basket-product button {
+  grid-area: button;
 }
 
 
-.order {
+.order, .contact-container, .payment-method-container {
   margin: 40px auto;
   border: 1px solid grey;
   width: 50%;
@@ -91,15 +133,15 @@
   width: 30vw;
 }
 
-.link {
+.product .link, .link :visited {
   text-decoration: none;
   color: rgb(73, 73, 73);
 }
-.link :visited {
-  color: rgb(73, 73, 73);
-}
 
-.login-btn{
+
+
+
+.btn{
   margin: 10px;
   padding: 5px;
   width: 50%;
@@ -109,13 +151,7 @@
   text-decoration: none;
 }
 
-.login-form {
-  border: 1px solid rgb(223, 223, 223);
-  box-shadow: 3px 3px 3px rgb(223, 223, 223);
-  margin: 10px auto;
-  padding: 20px;
-  width: 30vw;
-}
+
 
 .checkout-btn {
   padding: 10px;
@@ -129,14 +165,27 @@
   flex-wrap: wrap;
   justify-content: center;
   
+  
 }
 
 .account .link {
   width: 40%;
   margin: 10px;
   padding: 20px;
+  background-color: rgb(90, 155, 155);
   border: 1px solid rgb(223, 223, 223);
-  box-shadow: 3px 3px 3px rgb(223, 223, 223);
+  box-shadow: 3px 3px 3px rgb(199, 199, 199);
+  color: white;
+  text-decoration: none;
+}
+
+.account .link h1 {
+  text-shadow: 2px 2px 2px rgb(65, 65, 65);
+}
+
+
+.account .link :visited {
+  color: white;
 }
 
 

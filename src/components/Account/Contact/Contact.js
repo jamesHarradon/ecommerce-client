@@ -49,7 +49,7 @@ const Contact = ({userId}) => {
     
 
     return (
-        <div>
+        <div className='contact-container'>
             <h1>Contact</h1>
             {contacts && contacts.map(contact => 
                 <div className="contact" key={contact.id} id={contact.id}>
@@ -64,7 +64,7 @@ const Contact = ({userId}) => {
                 </div>
             )}
             {!contacts &&
-                <div className='add-contact'>
+                <div className='form'>
                     <h2>Add Contact</h2>
                     <form onSubmit={handleSubmit(handleAddContact)}>
                         <label htmlFor="address_line1">Address Line 1:</label>

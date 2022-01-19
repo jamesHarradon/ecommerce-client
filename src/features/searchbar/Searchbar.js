@@ -15,18 +15,19 @@ export default function Searchbar () {
         const term = e.target.value;
         setTerm(term);
         
+        
     }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         dispatch(getProductsByTerm(term));  
+        
     };
 
     return (
         <div>
             <form onSubmit={onSubmitHandler}>
-                <input id='searchbar' type='search' onChange={(e) => onChangeHandler(e)}></input>
-                <button className="submit" type='submit'>Search</button>
+                <input id='searchbar' type='search' placeholder="Search products" onChange={(e) => onChangeHandler(e)}></input>
             </form>
         </div>
         

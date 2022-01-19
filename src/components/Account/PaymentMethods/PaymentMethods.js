@@ -42,7 +42,7 @@ const PaymentMethods = ({userId}) => {
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
 
     return (
-        <div>
+        <div className='payment-method-container'>
             <h1>Payment Methods</h1>
             {paymentMethod && paymentMethod.map(card => 
                 <div key={card.id}>
@@ -55,7 +55,7 @@ const PaymentMethods = ({userId}) => {
             {!paymentMethod && !addCard && <button onClick={() => setAddCard(true)}>Add Card</button>}
             {addCard &&
             
-            <div className='add-card-form'>
+            <div className='form'>
                 <form onSubmit={handleSubmit(addCardHandler)}>
                     <label htmlFor="card_type">Card Type:</label>
                     <input type='text' id='card_type' name='card_type' {...register('card_type')} className={`form-control ${errors.card_type ? 'is-invalid' : ''}`}></input>
