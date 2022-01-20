@@ -6,23 +6,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import GoogleLogin from 'react-google-login';
 
-
-
-import { setUserId, setLoggedIn, logout, setCartId } from "../../userSlice";
-import { getBasketByCustId } from "../Basket/basketSlice";
-import { getBasketProductsByCustId, selectBasketProducts } from "../Basket/basketProductsSlice";
-import { setGuestId, setGuestBasketToDB, setGuestBasket } from "../../guestSlice";
-import { getContacts } from "../Account/Contact/contactSlice";
-import { getLoginDetails } from "../Account/LoginDetails/loginDetailsSlice";
-import { getOrders } from "../Account/Orders/ordersSlice";
-import { getPaymentMethod } from "../Account/PaymentMethods/paymentSlice";
+import { setUserId, setLoggedIn, setCartId } from "../../userSlice";
+import { getBasketByCustId } from "../../features/Basket/basketSlice";
+import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
+import { setGuestId, setGuestBasketToDB, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
+import { getContacts } from "../../features/Account/Contact/contactSlice";
+import { getLoginDetails } from "../../features/Account/LoginDetails/loginDetailsSlice";
+import { getOrders } from "../../features/Account/Orders/ordersSlice";
+import { getPaymentMethod } from "../../features/Account/PaymentMethods/paymentSlice";
 
 
 
-const Login = ({guestId, guestBasket}) => {
+const Login = () => {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const guestId = useSelector(selectGuestId);
+    const guestBasket = useSelector(selectGuestBasket);
     
     
     const loginFunc = (id, guestBasket, guestId) => {
@@ -104,7 +105,7 @@ const Login = ({guestId, guestBasket}) => {
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
 
     return (
-        <div className='form'>
+        <div className='form-container'>
             <h1>Login</h1>
             <form onSubmit={handleSubmit(handleLogin)}>
                 <input type='email' id='email' name='email' placeholder="Email" {...register('email')} className={`form-control ${errors.email ? 'is-invalid' : ''}`} ></input>

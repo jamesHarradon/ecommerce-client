@@ -1,25 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import GoogleLogin from 'react-google-login';
 
-import { logout, setLoggedIn, setUserId, getNewCartId } from "../../userSlice";
-import { setGuestBasketToDB, setGuestId, setGuestBasket } from "../../guestSlice";
-import { getBasketByCustId } from "../../components/Basket/basketSlice";
-import { getBasketProductsByCustId } from "../../components/Basket/basketProductsSlice";
-import { getContacts } from "../../components/Account/Contact/contactSlice";
-import { getPaymentMethod } from "../../components/Account/PaymentMethods/paymentSlice";
-import { getLoginDetails } from "../../components/Account/LoginDetails/loginDetailsSlice";
-import { getOrders } from "../../components/Account/Orders/ordersSlice";
+import { setLoggedIn, setUserId, getNewCartId } from "../../userSlice";
+import { setGuestBasketToDB, setGuestId, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
+import { getBasketByCustId } from "../../features/Basket/basketSlice";
+import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
+import { getContacts } from "../../features/Account/Contact/contactSlice";
+import { getPaymentMethod } from "../../features/Account/PaymentMethods/paymentSlice";
+import { getLoginDetails } from "../../features/Account/LoginDetails/loginDetailsSlice";
+import { getOrders } from "../../features/Account/Orders/ordersSlice";
 
 
-const Register = ({ guestId, guestBasket }) => {
+const Register = () => {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const guestId = useSelector(selectGuestId);
+    const guestBasket = useSelector(selectGuestBasket);
 
     const loginFunc = (id, guestBasket, guestId) => {
         dispatch(setUserId(id))
@@ -113,7 +116,7 @@ const Register = ({ guestId, guestBasket }) => {
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
 
     return (
-        <div className='form'>
+        <div className='form-container'>
             <h1>Register</h1>
             <form className='register-form' onSubmit={handleSubmit(handleRegister)}>
                 <div className="register-form-fields">

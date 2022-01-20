@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link } from 'react-router-dom';
 
-const Account = ({userId}) => {
-    const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if(!userId) navigate('/login')
-    // },[navigate, userId])
-    
+const Account = () => {
+   
     return (
         <div className='account'>    
             <Link className="link" to='/account/orders'><h1>Orders</h1></Link>

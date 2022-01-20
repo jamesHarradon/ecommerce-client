@@ -1,19 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectBasketProducts } from "../Basket/basketProductsSlice";
+import { selectBasketProducts } from "../../features/Basket/BasketProducts/basketProductsSlice";
 import logo from '../../uku-logo.png'
+import Searchbar from '../searchbar/Searchbar'
+import { selectUserId } from "../../userSlice";
+import { selectGuestBasket } from "../../guestSlice";
 
 
-
-import Searchbar from "../../features/searchbar/Searchbar"
-
-
-export default function Navbar({userId, guestBasket}) {
+export default function Navbar() {
 
     const basketProducts = useSelector(selectBasketProducts);
-    // try to refactor below
-    
+    const userId = useSelector(selectUserId);
+    const guestBasket = useSelector(selectGuestBasket);
+
     return (
         <div className="navbar-container">
             <div className='navbar'>

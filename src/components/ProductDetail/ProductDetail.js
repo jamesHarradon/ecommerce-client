@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { selectProducts } from "../Products/productsSlice";
+import { useSelector } from 'react-redux';
+import { selectProducts } from "../../features/Products/productsSlice";
 
 
 
@@ -10,17 +10,17 @@ const ProductDetail = () => {
     const params = useParams();
     const navigate = useNavigate();
     const products = useSelector(selectProducts);
-    const product = products.filter(prod => prod.id === parseInt(params.id));
+    const product = products.filter(product => product.id === parseInt(params.id));
     
 
     return (
         <div>
-            {product.map(fProd => (
+            {product.map(data => (
                 <div className='product-detail'>
-                    <h2>{fProd.product_name}</h2>
-                    <img src={fProd.image} alt={fProd.product_name}></img>
-                    <p className='description'>{fProd.description}</p>
-                    <p>{fProd.price_per_unit}</p>
+                    <h2>{data.product_name}</h2>
+                    <img src={data.image} alt={data.product_name}></img>
+                    <p className='description'>{data.description}</p>
+                    <p>{data.price_per_unit}</p>
                 </div>
             ))}
             <button onClick={() => navigate('/')}>Back</button>

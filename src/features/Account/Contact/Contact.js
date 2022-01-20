@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { addContacts, getContacts, selectContacts } from './contactSlice'
+import { selectUserId } from "../../../userSlice";
 
-const Contact = ({userId}) => {
+const Contact = () => {
 
-    const [ editContact, setEditContact ] = useState(false);
+    //to do - add edit contact feature
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const contacts = useSelector(selectContacts);
+    const userId = useSelector(selectUserId);
 
     useEffect(() => {
         dispatch(getContacts(userId))
-    },[dispatch, userId, editContact])
+    },[dispatch, userId])
 
     const handleAddContact = (data) => {
         dispatch(addContacts({userId: userId, ...data}))
@@ -64,7 +66,7 @@ const Contact = ({userId}) => {
                 </div>
             )}
             {!contacts &&
-                <div className='form'>
+                <div className='form-container'>
                     <h2>Add Contact</h2>
                     <form onSubmit={handleSubmit(handleAddContact)}>
                         <label htmlFor="address_line1">Address Line 1:</label>

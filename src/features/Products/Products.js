@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, selectProducts } from "./productsSlice";
-import { setGuestBasket } from "../../guestSlice";
+import { selectGuestId, setGuestBasket } from "../../guestSlice";
+import Product from '../../components/Product/Product'
 
 
-import Product from "../Product/Product";
-
-const Products = ({ userId, guestId, guestBasket }) => {
+const Products = () => {
 
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
+    const guestId = useSelector(selectGuestId);
+   
     
-
     useEffect(() => {
-        dispatch(getProducts());
-    },[dispatch]);
+        if(!products.length > 0) dispatch(getProducts());
+    });
 
     useEffect(() => {
         if(guestId) dispatch(setGuestBasket(JSON.parse(localStorage.getItem(guestId))))
@@ -23,7 +23,7 @@ const Products = ({ userId, guestId, guestBasket }) => {
 
     return (
         <div className='products'>
-            {products.map(product => <Product key={product.id} productId={product.id} guestId={guestId} name={product.product_name} price={product.price_per_unit} image={product.image} description={product.description}  userId={userId} guestBasket={guestBasket} />)}
+            {products.map(product => <Product key={product.id} productId={product.id} name={product.product_name} price={product.price_per_unit} image={product.image} description={product.description} />)}
         </div>
     )
 }

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { getProductsByTerm } from "../../components/Products/productsSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getProducts, getProductsByTerm } from "../../features/Products/productsSlice";
 
 export default function Searchbar () {
 
@@ -14,14 +14,18 @@ export default function Searchbar () {
     const onChangeHandler = (e) => {
         const term = e.target.value;
         setTerm(term);
-        
-        
     }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        dispatch(getProductsByTerm(term));  
-        
+        if (location.pathname === '/') {
+            if (term === '') return dispatch(getProducts());
+            dispatch(getProductsByTerm(term));  
+        } else {
+            navigate('/')
+            if (term === '') return dispatch(getProducts());
+            dispatch(getProductsByTerm(term));
+        }
     };
 
     return (

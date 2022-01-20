@@ -5,12 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { addPaymentMethod, getPaymentMethod, selectPaymentMethod } from "./paymentSlice";
 import { DateTime } from 'luxon';
+import { selectUserId } from "../../../userSlice";
 
-const PaymentMethods = ({userId}) => {
+const PaymentMethods = () => {
 
     const [ addCard, setAddCard ] = useState(false);
     const dispatch = useDispatch();
     const paymentMethod = useSelector(selectPaymentMethod);
+    const userId = useSelector(selectUserId);
     const dt = DateTime.now();
     const dtFormatted = dt.toString().split('').splice(0, 7).join('')
 
@@ -55,7 +57,7 @@ const PaymentMethods = ({userId}) => {
             {!paymentMethod && !addCard && <button onClick={() => setAddCard(true)}>Add Card</button>}
             {addCard &&
             
-            <div className='form'>
+            <div className='form-container'>
                 <form onSubmit={handleSubmit(addCardHandler)}>
                     <label htmlFor="card_type">Card Type:</label>
                     <input type='text' id='card_type' name='card_type' {...register('card_type')} className={`form-control ${errors.card_type ? 'is-invalid' : ''}`}></input>

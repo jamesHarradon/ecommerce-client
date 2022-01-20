@@ -1,10 +1,10 @@
 import React from "react";
 
-const ErrorPage = ({err}) => {
+const ErrorPage = () => {
     return (
         <div>
             <h1>
-                There was an error {err}
+                There was an error 
             </h1>
         </div>
     )

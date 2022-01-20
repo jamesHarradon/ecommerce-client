@@ -1,18 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getNewCartId } from "../../userSlice";
-import { selectContacts } from "../Account/Contact/contactSlice";
-import { getOrders } from "../Account/Orders/ordersSlice";
-import { getBasketProductsByCustId } from "../Basket/basketProductsSlice";
-import { getBasketByCustId } from "../Basket/basketSlice";
+import { getNewCartId, selectCartId, selectUserId } from "../../userSlice";
+import { selectContacts } from "../../features/Account/Contact/contactSlice";
+import { getOrders } from '../../features/Account/Orders/ordersSlice'
+import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
+import { getBasketByCustId } from "../../features/Basket/basketSlice";
 
-const CheckoutSuccess = ({userId, cartId}) => {
+const CheckoutSuccess = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const contactData = useSelector(selectContacts);
+    const userId = useSelector(selectUserId);
+    const cartId = useSelector(selectCartId);
     const firstName = contactData[0].first_name;
 
     const onClickHandler = async () => {

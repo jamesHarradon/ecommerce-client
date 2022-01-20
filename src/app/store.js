@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import basketSlice from '../components/Basket/basketSlice';
-import basketProductsSlice from '../components/Basket/basketProductsSlice';
-import contactSlice from '../components/Account/Contact/contactSlice';
-import productsSlice from '../components/Products/productsSlice';
+import basketSlice from '../features/Basket/basketSlice';
+import basketProductsSlice from '../features/Basket/BasketProducts/basketProductsSlice';
+import contactSlice from '../features/Account/Contact/contactSlice';
+import productsSlice from '../features/Products/productsSlice';
 import userSlice from '../userSlice';
-import paymentSlice from '../components/Account/PaymentMethods/paymentSlice';
-import loginDetailsSlice from '../components/Account/LoginDetails/loginDetailsSlice'
-import ordersSlice from '../components/Account/Orders/ordersSlice';
+import paymentSlice from '../features/Account/PaymentMethods/paymentSlice';
+import loginDetailsSlice from '../features/Account/LoginDetails/loginDetailsSlice'
+import ordersSlice from '../features/Account/Orders/ordersSlice';
 import guestSlice from '../guestSlice';
 
 import {
@@ -19,7 +19,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import ordersProductsSlice from '../components/Account/Orders/OrdersProducts/ordersProductsSlice';
+import ordersProductsSlice from '../features/Account/Orders/OrdersProducts/ordersProductsSlice';
 
 
 

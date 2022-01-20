@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { selectUserId } from "../../../userSlice";
 import { getOrders, selectOrders } from "./ordersSlice";
 
-const Orders = ({ userId }) => {
+const Orders = () => {
 
     const dispatch = useDispatch();
     const orders = useSelector(selectOrders);
+    const userId = useSelector(selectUserId);
 
     useEffect(() => {
         dispatch(getOrders(userId))

@@ -2,20 +2,21 @@ import { nanoid } from "@reduxjs/toolkit";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { setGuestId, setGuestBasket } from "../../guestSlice";
-import { setCartId, selectCartId } from "../../userSlice";
-import { getBasketProductsByCustId, addBasketProducts, selectBasketProducts } from "../Basket/basketProductsSlice";
-import { getBasketByCustId } from "../Basket/basketSlice";
+import { setGuestId, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
+import { selectCartId, selectUserId } from "../../userSlice";
+import { getBasketProductsByCustId, addBasketProducts, selectBasketProducts } from "../../features/Basket/BasketProducts/basketProductsSlice";
+import { getBasketByCustId } from "../../features/Basket/basketSlice";
 
 
-
-
-const Product = ({productId, name, price, image, description, userId, guestId, guestBasket }) => {
+const Product = ({ productId, name, price, image, description }) => {
 
     const cartId = useSelector(selectCartId);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const basketProducts = useSelector(selectBasketProducts);
+    const userId = useSelector(selectUserId);
+    const guestId = useSelector(selectGuestId);
+    const guestBasket = useSelector(selectGuestBasket);
 
     useEffect(() => {
         if (guestId) localStorage.setItem(guestId, JSON.stringify(guestBasket))  

@@ -30,7 +30,6 @@ export const addBasketProducts = createAsyncThunk(
 
 export const incrementBasketProduct = createAsyncThunk(
     'basketProducts/incrementBasketProduct', async (data) => {
-        console.log(data);
         try {
             const response = await fetch(`http://localhost:4000/api/cart/products/increment/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'PUT',

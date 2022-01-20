@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBasketProducts, getBasketProductsByCustId, incrementBasketProduct, decrementBasketProduct, selectBasketProducts } from './basketProductsSlice'
-import { getBasketByCustId } from "./basketSlice";
-import { selectCartId, selectUserId } from "../../userSlice";
-import { setGuestBasket, selectGuestId, incrementGuestBasketProduct, decrementGuestBasketProduct, selectGuestBasket } from "../../guestSlice";
+import { deleteBasketProducts, getBasketProductsByCustId, incrementBasketProduct, decrementBasketProduct } from './basketProductsSlice'
+import { getBasketByCustId } from '../basketSlice'
+import { selectCartId, selectUserId } from '../../../userSlice'
+import { setGuestBasket, selectGuestId, incrementGuestBasketProduct, decrementGuestBasketProduct, selectGuestBasket } from "../../../guestSlice";
 
 
 const BasketProducts = ({id, name, price, quantity, image, description }) => {

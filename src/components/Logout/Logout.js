@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserId, logout } from "../../userSlice";
+import { logout } from "../../userSlice";
 
 
 
 // add logout fetch to this to get rid of token
-const Logout = ({guestId}) => {
+const Logout = () => {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {

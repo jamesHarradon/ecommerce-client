@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { changePassword, getLoginDetails, selectChangePasswordSucceeded, selectLoginDetails } from "./loginDetailsSlice";
-import { useNavigate } from "react-router-dom";
+import { changePassword, getLoginDetails, selectLoginDetails } from "./loginDetailsSlice";
+import { selectUserId } from "../../../userSlice";
 
-const LoginDetails = ({userId}) => {
+const LoginDetails = () => {
     
     const [ changePasswordClick, setChangePasswordClick ] = useState(false);
     
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const loginDetails = useSelector(selectLoginDetails);
+    const userId = useSelector(selectUserId);
 
     useEffect(() => {
         dispatch(getLoginDetails(userId))
@@ -51,7 +51,7 @@ const LoginDetails = ({userId}) => {
     const { register, handleSubmit, formState:{ errors } } = useForm(formOptions);
 
     return (
-        <div className='form'>
+        <div className='form-container'>
             <h1>Login Details</h1>
             <p>Email: {loginDetails.email}</p>
                 

@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getBasketProductsByCustId, selectBasketProducts} from './basketProductsSlice'
+import { getBasketProductsByCustId, selectBasketProducts} from './BasketProducts/basketProductsSlice'
 import { getBasketByCustId, selectBasket } from "./basketSlice";
-import BasketProducts from './BasketProducts';
+import BasketProducts from './BasketProducts/BasketProducts'
 import { selectContacts } from "../Account/Contact/contactSlice";
-import { selectIsLoggedIn } from "../../userSlice";
+import { selectIsLoggedIn, selectUserId } from "../../userSlice";
+import { selectGuestBasket, selectGuestId } from "../../guestSlice";
 
 
-const Basket = ({userId, guestId, guestBasket, cartId }) => {
+const Basket = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
     const basket = useSelector(selectBasket);
     const basketProducts = useSelector(selectBasketProducts);
     const contacts = useSelector(selectContacts);
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const userId = useSelector(selectUserId);
+    const guestId = useSelector(selectGuestId);
+    const guestBasket = useSelector(selectGuestBasket);
 
     let email = contacts && isLoggedIn ? contacts[0].email : null;
     const bodyToSend = { products: basketProducts, email: email}
