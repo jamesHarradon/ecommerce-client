@@ -44,8 +44,8 @@ const Login = () => {
         }
         dispatch(getBasketByCustId(id));
         dispatch(getBasketProductsByCustId(id));
-        //expires same time as jwt - 30mins - resets redux state to initial
-        setTimeout(() => navigate('/logout'), 1800000);
+        //expires same time as jwt - 60mins - resets redux state to initial
+        setTimeout(() => navigate('/logout'), 3600000);
     }
 
     const handleLogin = async (response) => {
