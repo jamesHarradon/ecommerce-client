@@ -65,19 +65,21 @@ const Basket = ({userId, guestId, guestBasket, cartId }) => {
     return (
         <div>
             <h1>Basket</h1>
-            {userId && basketToUse.length > 0 &&
-                <button className='checkout-btn' onClick={() => checkoutHandler(bodyToSend)}>Checkout</button>
-            }
-            {!userId &&
-                <p>Please Login/Register to Checkout</p>
-            }
-        
-            { basketProducts.length > 0 && 
-                <h3 key='total'>Total: {basket.total_cost}</h3>
-            }
-            { guestBasket.length > 0 && 
-                <h3>Total: £{guestTotal}</h3>
-            }
+            <div className="basket-flex"> 
+                
+                { basketProducts.length > 0 && 
+                    <h3 key='total'>Total: {basket.total_cost}</h3>
+                }
+                { guestBasket.length > 0 && 
+                    <h3>Total: £{guestTotal}</h3>
+                }
+                {userId && basketToUse.length > 0 &&
+                    <button className='checkout-btn' onClick={() => checkoutHandler(bodyToSend)}>Checkout</button>
+                }
+                {!userId &&
+                    <p>Please Login/Register to Checkout</p>
+                }
+            </div>
             <div>
                 {basketToUse.length > 0 && 
                     basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} price={product.price_per_unit} quantity={product.quantity} image={product.image} description={product.description}  />

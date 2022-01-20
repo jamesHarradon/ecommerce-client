@@ -14,6 +14,7 @@ const OrdersProducts = () => {
     const orders = useSelector(selectOrders);
     const order = orders.filter(order => order.id === parseInt(params.id));
     const orderTotal = order[0].total_cost;
+    const orderDate = order[0].order_date;
     const ordersProducts = useSelector(selectOrdersProducts);
 
     
@@ -25,12 +26,17 @@ const OrdersProducts = () => {
     return (
         <div>
             <h1>Order No. {params.id}</h1>
+            <div className='order-flex'>
+                <h3><b>Order Total: {orderTotal}</b></h3>
+                <h3>Date/Time: {orderDate}</h3>
+                <button onClick={() => navigate('/account/orders')}>All Orders</button>
+            </div>
             {ordersProducts.length > 0 && ordersProducts.map(product => (
                 <div className='orders-product' key={product.product_id}>
                     <p>{product.product_name}</p>
                     <div className='orders-product-flex'>
                     <img src={product.image} alt={product.product_name}></img>
-                        <div className='orders-product-numbers'>
+                        <div className='orders-product-elements'>
                             <p>Cost: {product.price_per_unit}</p>
                             <p>Quantity: {product.quantity}</p>
                             <p>Total: {product.total_cost}</p>
@@ -38,8 +44,7 @@ const OrdersProducts = () => {
                     </div>  
                 </div>
             ))}
-            <h3><b>Total For Order: {orderTotal}</b></h3>
-            <button onClick={() => navigate('/account/orders')}>All Orders</button>
+            
         </div>
 
 

@@ -74,6 +74,10 @@
   padding-bottom: 50px;
 }
 
+#main h1 {
+  margin: 0px;
+}
+
 .form {
   border: 1px solid rgb(223, 223, 223);
   box-shadow: 3px 3px 3px rgb(223, 223, 223);
@@ -115,13 +119,14 @@
   text-align: justify;
 }
 
-.basket-product {
-  /* display: grid;
-  grid-template-areas: 
-    'picture' 'name'
-    'picture' 'price'
-    'picture' 'button';
-  grid-gap: 20px; */
+.basket-flex, .order-flex {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: 0px auto;
+
 
 }
 
