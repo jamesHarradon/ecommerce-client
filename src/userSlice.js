@@ -3,14 +3,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const getNewCartId= createAsyncThunk(
-    'cartId/getNewCartId', async (id) => {
+    'cartId/getNewCartId', async (id, { rejectWithValue }) => {
         try {
             const newCartResponse = await fetch(`http://localhost:4000/api/cart/new/${id}`, {
                 method: 'POST',
                 credentials: 'include'
             });
-            const newCart = await newCartResponse.json();
-            return newCart.id;
+            if (newCartResponse.ok) {
+                const newCart = await newCartResponse.json();
+                return newCart.id;
+            } else {
+                rejectWithValue(null);
+                const errorMsg = await newCartResponse.json()
+                throw new Error(errorMsg);
+            }
+            
         } catch (err) {
             console.log(err);
         } 
@@ -18,11 +25,18 @@ export const getNewCartId= createAsyncThunk(
 )
 
 export const setCartId= createAsyncThunk(
-    'cartId/setCartId', async (id) => {
+    'cartId/setCartId', async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
-            const cart = await response.json();
-            return cart.id;
+            if (response.ok) {
+                const cart = await response.json();
+                return cart.id;
+            } else {
+                rejectWithValue(null);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            }
+            
         } catch (err) {
             console.log(err);
         } 

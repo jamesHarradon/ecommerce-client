@@ -1,10 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getBasketByCustId = createAsyncThunk(
-    'basket/getBasketByCustId', async (id) => {
-        const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
-        const json = await response.json();
-        return json;
+    'basket/getBasketByCustId', async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            } else {
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            }
+        } catch (err) {
+            console.log(err);
+        }          
     }
 )
 

@@ -148,8 +148,6 @@ form {
   align-items: center;
   width: 50%;
   margin: 0px auto;
-
-
 }
 
 .basket-product img {
@@ -197,6 +195,8 @@ form {
   width: 30vw;
   
 }
+
+
 
 .product .link, .link :visited {
   text-decoration: none;

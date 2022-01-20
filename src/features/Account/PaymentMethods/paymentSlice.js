@@ -8,7 +8,8 @@ export const getPaymentMethod = createAsyncThunk(
                 const json = await response.json();
                 return json;
             } else {
-                throw new Error('System Error');
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);
@@ -32,6 +33,8 @@ export const addPaymentMethod = createAsyncThunk(
                 return json;
             } else {
                 rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);

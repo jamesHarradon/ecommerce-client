@@ -45,9 +45,11 @@ const Product = ({ productId, name, price, image, description }) => {
     return (
         <div className='product' key={productId}>
             <Link className="link" to={`/products/${productId}`}>
-                <h3>{name}</h3>
-                <img className='product-image' src={image} alt={name}></img>
-                <h3>{price}</h3>
+                <div className="link-container">
+                    <h3>{name}</h3>
+                    <img className='product-image' src={image} alt={name}></img>
+                    <h3>{price}</h3>
+                </div>
             </Link>
             {basketToUse.some(product => product.product_id === productId)
             ? <p>Item Added to Basket</p>

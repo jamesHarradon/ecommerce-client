@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getOrdersProducts = createAsyncThunk(
-    'ordersProducts/getOrdersProducts', async (data) => {
+    'ordersProducts/getOrdersProducts', async (data, { rejectWithValue }) => {
         const response = await fetch(`http://localhost:4000/api/orders/single/${data.userId}/${data.orderId}`, {credentials: 'include'});
         try {
             if (response.ok) {
                 const json = await response.json();
                 return json;
             } else {
-                throw new Error('System Error');
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);

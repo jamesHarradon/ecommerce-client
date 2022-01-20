@@ -4,23 +4,34 @@ export const getProducts = createAsyncThunk(
     'products/getProducts', async () => {
         try {
             const response = await fetch('http://localhost:4000/api/products');
-            const json = await response.json();
-            return json;
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            } else {
+                // cant seem to use rejectWithValue unless there is a value for arg
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            }      
         } catch (err) {
             console.log(err)
         }   
     })
 
 export const getProductsByTerm = createAsyncThunk(
-    'products/getProductsByTerm', async (term) => {
+    'products/getProductsByTerm', async (term, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/products/search/${term}`);
-            const json = await response.json();
-            return json;
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            } else {
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            }
         } catch (err) {
             console.log(err);
         }
-        
     }
 )
 

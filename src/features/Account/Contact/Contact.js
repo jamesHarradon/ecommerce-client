@@ -54,7 +54,7 @@ const Contact = () => {
         <div className='contact-container'>
             <h1>Contact</h1>
             {contacts && contacts.map(contact => 
-                <div className="contact" key={contact.id} id={contact.id}>
+                <div className="contact" key={contact.contact_id} id={contact.contact_id}>
                     <p>{contact.first_name} {contact.last_name}</p>
                     <p>{contact.address_line1}</p>
                     <p>{contact.address_line2}</p>

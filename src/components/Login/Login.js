@@ -41,6 +41,9 @@ const Login = () => {
                     dispatch(setGuestBasket([]));
                     localStorage.removeItem(guestId);
                 } )
+        } else {
+            dispatch(setGuestId(null)); 
+            localStorage.removeItem(guestId);
         }
         dispatch(getBasketByCustId(id));
         dispatch(getBasketProductsByCustId(id));

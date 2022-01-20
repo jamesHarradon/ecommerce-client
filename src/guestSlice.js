@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 //adds guest basket to DB once they have a user ID
 export const setGuestBasketToDB = createAsyncThunk(
-    'guestBasketToDB/setGuestBasketToDB', async (data) => {
+    'guestBasketToDB/setGuestBasketToDB', async (data, { rejectWithValue }) => {
 
         try {
             let cartId;
@@ -30,6 +30,7 @@ export const setGuestBasketToDB = createAsyncThunk(
             return true;
             
         } catch (err) {
+            rejectWithValue(false);
             console.log(err);
         }
     }

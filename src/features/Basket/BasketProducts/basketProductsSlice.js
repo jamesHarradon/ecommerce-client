@@ -1,15 +1,25 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getBasketProductsByCustId = createAsyncThunk(
-    'basketProducts/getBasketProductsByCustId', async (id) => {
-        const response = await fetch(`http://localhost:4000/api/cart/products/${id}`, {credentials: 'include'});
-        const json = await response.json();
-        return json;
+    'basketProducts/getBasketProductsByCustId', async (id, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/products/${id}`, {credentials: 'include'});
+            if (response.ok) {
+                const json = await response.json();
+                return json;
+            }else {
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            }
+        } catch (err) {
+            console.log(err);
+        }  
     }
 );
 
 export const addBasketProducts = createAsyncThunk(
-    'basketProducts/addBasketProducts', async (data) => {
+    'basketProducts/addBasketProducts', async (data, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${data.cartId}/${data.productId}/1`, {
                 method: 'POST',
@@ -20,7 +30,9 @@ export const addBasketProducts = createAsyncThunk(
                 return json;
             }
             else {
-                throw new Error('System Error')
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);
@@ -29,7 +41,7 @@ export const addBasketProducts = createAsyncThunk(
 );
 
 export const incrementBasketProduct = createAsyncThunk(
-    'basketProducts/incrementBasketProduct', async (data) => {
+    'basketProducts/incrementBasketProduct', async (data, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/products/increment/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'PUT',
@@ -38,7 +50,11 @@ export const incrementBasketProduct = createAsyncThunk(
             if (response.ok) {
                 const json = await response.json();
                 return json;
-            }
+            } else {
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
+            } 
         } catch (err) {
             console.log(err);
         }
@@ -46,7 +62,7 @@ export const incrementBasketProduct = createAsyncThunk(
 );
 
 export const decrementBasketProduct = createAsyncThunk(
-    'basketProducts/incrementBasketProduct', async (data) => {
+    'basketProducts/decrementBasketProduct', async (data, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/products/decrement/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'PUT',
@@ -55,6 +71,10 @@ export const decrementBasketProduct = createAsyncThunk(
             if (response.ok) {
                 const json = await response.json();
                 return json;
+            } else {
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);
@@ -63,7 +83,7 @@ export const decrementBasketProduct = createAsyncThunk(
 )
 
 export const deleteBasketProducts = createAsyncThunk(
-    'basketProducts/deleteBasketProducts', async (data) => {
+    'basketProducts/deleteBasketProducts', async (data, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/products/delete/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'DELETE',
@@ -74,7 +94,9 @@ export const deleteBasketProducts = createAsyncThunk(
                 return json;
             }
             else {
-                throw new Error('System Error');
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);

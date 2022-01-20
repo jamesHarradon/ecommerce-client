@@ -80,7 +80,7 @@ const Basket = () => {
                 {userId && basketToUse.length > 0 &&
                     <button className='checkout-btn' onClick={() => checkoutHandler(bodyToSend)}>Checkout</button>
                 }
-                {!userId &&
+                {!userId && guestBasket.length > 0 &&
                     <p>Please Login/Register to Checkout</p>
                 }
             </div>

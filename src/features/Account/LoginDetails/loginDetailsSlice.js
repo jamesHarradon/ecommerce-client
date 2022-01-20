@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const  getLoginDetails = createAsyncThunk(
-    'loginDetails/getLoginDetails', async (id) => {
+    'loginDetails/getLoginDetails', async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/customer/data/email/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
             } else {
-                throw new Error('System Error');
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }    
         } catch (err) {
             console.log(err)
@@ -31,7 +33,9 @@ export const changePassword = createAsyncThunk(
             if(response.ok) {
                 return true;
             } else {
-                return rejectWithValue(false)
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
         

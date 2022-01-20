@@ -42,7 +42,9 @@ const Register = () => {
                     localStorage.removeItem(guestId);
                 } )
         } else {
-            dispatch(getNewCartId(id))
+            dispatch(setGuestId(null)); 
+            localStorage.removeItem(guestId);
+            dispatch(getNewCartId(id));
         }
         dispatch(getBasketByCustId(id))
         dispatch(getBasketProductsByCustId(id))
