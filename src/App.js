@@ -10,6 +10,7 @@ import Account from './components/Account/Account';
 import Contact from './components/Account/Contact/Contact';
 import LoginDetails from './components/Account/LoginDetails/LoginDetails';
 import Orders from './components/Account/Orders/Orders';
+import OrdersProducts from './components/Account/Orders/OrdersProducts/ordersProducts';
 import PaymentMethods from './components/Account/PaymentMethods/PaymentMethods';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Products from './components/Products/Products';
@@ -44,6 +45,7 @@ function App() {
             <Route path='/products/:id' element={<ProductDetail />} />
             <Route path='/account' element={<Account />} />
             <Route path='/account/orders' element={<Orders userId={userId}/>} />
+            <Route path='/account/orders/:id' element={<OrdersProducts />} />
             <Route path='/account/logindetails' element={<LoginDetails userId={userId} />} />
             <Route path='/account/contact' element={<Contact userId={userId} />} />
             <Route path='/account/paymentmethods' element={<PaymentMethods userId={userId} />} />

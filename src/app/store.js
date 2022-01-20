@@ -19,6 +19,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import ordersProductsSlice from '../components/Account/Orders/OrdersProducts/ordersProductsSlice';
 
 
 
@@ -31,6 +32,7 @@ const appReducer = combineReducers({
   paymentMethod: paymentSlice,
   loginDetails: loginDetailsSlice,
   orders: ordersSlice,
+  ordersProducts: ordersProductsSlice,
   guest: guestSlice
 });
 

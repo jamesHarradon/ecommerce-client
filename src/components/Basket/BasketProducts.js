@@ -75,13 +75,17 @@ const BasketProducts = ({id, name, price, quantity, image, description }) => {
     return (
     
         <div className="basket-product" key={id} id={name}>
-            <img src={image} alt={name}/>
             <p id='product-name'>{name}</p>
-            <p id='product-price'>{price}</p>
-            <p id='product-quantity'>{quantity}</p>
-            <button onClick={() => incrementProduct(userId, cartId, id)}>+</button>
-            <button onClick={() => removeBasketProductHandler(userId)}>X</button>
-            <button onClick={() => decrementProduct(userId, cartId, id)}>-</button>
+            <div className='basket-product-flex'>
+                <img src={image} alt={name}/>
+                <div className="basket-product-elements">
+                    <p id='product-price'>{price}</p>
+                    <p id='product-quantity'>Quantity: {quantity}</p>
+                    <button onClick={() => incrementProduct(userId, cartId, id)}>+</button>
+                    <button onClick={() => removeBasketProductHandler(userId)}>Remove</button>
+                    <button onClick={() => decrementProduct(userId, cartId, id)}>-</button>
+                </div>
+            </div>
             
         </div>
 

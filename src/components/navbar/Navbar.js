@@ -17,10 +17,10 @@ export default function Navbar({userId, guestBasket}) {
     return (
         <div className="navbar-container">
             <div className='navbar'>
-                <Link className="link" to='/'>
+                <Link id='logo' className="link" to='/'>
                     <img className="logo" src={logo} alt='ukulele logo'></img>
                 </Link>
-                <Searchbar/>
+                <Searchbar />
                 {userId &&
                     <div className='navbar-text'>
                         <Link className="link" to='/account'><p>Account</p></Link>

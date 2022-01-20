@@ -222,8 +222,36 @@
 }
 
 
-.account .link :visited {
+.account, .link :visited {
   color: white;
+}
+
+.orders .link, .link :visited {
+  text-decoration: none;
+  color: rgb(73, 73, 73);
+}
+
+.orders-product, .basket-product {
+  border: 1px solid rgb(223, 223, 223);
+  width: 50%;
+  margin: 10px auto;
+}
+
+.orders-product-flex, .basket-product-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.orders-product img, .basket-product img {
+  width: auto;
+  height: 150px;
+  margin: 10px;
+}
+
+.basket-product button {
+  margin: 0px 5px;
 }
 
 
