@@ -3,13 +3,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 //adds guest basket to DB once they have a user ID
 export const setGuestBasketToDB = createAsyncThunk(
     'guestBasketToDB/setGuestBasketToDB', async (data) => {
-        // currently doesnt work - TypeError: guestBasket.forEach is not a function
-        // i think it is because I am referencing a piece of state from within the slice it originates
+
         try {
             let cartId;
             const response = await fetch(`http://localhost:4000/api/cart/${data.userId}`, {credentials: 'include'});
             const existingCart = await response.json();
-            
             
             if (existingCart && existingCart.total_cost) {
                 cartId = existingCart.id;
@@ -26,7 +24,7 @@ export const setGuestBasketToDB = createAsyncThunk(
             };
             //adds product to new cart in db
             data.guestBasket.forEach(async (product) => {
-                await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${cartId}/${product.product_id}`, {method: 'POST', credentials: 'include'});
+                await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${cartId}/${product.product_id}/${product.quantity}`, {method: 'POST', credentials: 'include'});
             });
 
             return true;
@@ -48,7 +46,15 @@ const guestSlice = createSlice({
     },
     reducers: {
         setGuestId: (state, action) => { state.guestId = action.payload },
-        setGuestBasket: (state, action) => { state.guestBasket = action.payload }
+        setGuestBasket: (state, action) => { state.guestBasket = action.payload },
+        incrementGuestBasketProduct: (state, action) => {
+            const product = state.guestBasket.find(product => product.product_id === action.payload);
+            product.quantity++;
+        },
+        decrementGuestBasketProduct: (state, action) => { 
+            const product = state.guestBasket.find(product => product.product_id === action.payload);
+            product.quantity--;
+        }
     },
     extraReducers: {
         [setGuestBasketToDB.pending]: (state, action) => {
@@ -73,6 +79,6 @@ export const selectGuestId = (state) => state.guest.guestId;
 export const selectGuestBasket = (state) => state.guest.guestBasket;
 export const selectGuestBasketToDB = (state) => state.guest.guestBasketToDB
 
-export const {setGuestId, setGuestBasket } = guestSlice.actions;
+export const {setGuestId, setGuestBasket, incrementGuestBasketProduct, decrementGuestBasketProduct } = guestSlice.actions;
 
 export default guestSlice.reducer;

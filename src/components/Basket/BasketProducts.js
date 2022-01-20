@@ -1,41 +1,53 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBasketProducts, getBasketProductsByCustId, incrementBasketProduct, selectBasketProducts } from './basketProductsSlice'
+import { deleteBasketProducts, getBasketProductsByCustId, incrementBasketProduct, decrementBasketProduct, selectBasketProducts } from './basketProductsSlice'
 import { getBasketByCustId } from "./basketSlice";
-import { setGuestBasket } from "../../guestSlice";
+import { selectCartId, selectUserId } from "../../userSlice";
+import { setGuestBasket, selectGuestId, incrementGuestBasketProduct, decrementGuestBasketProduct, selectGuestBasket } from "../../guestSlice";
 
 
-const BasketProducts = ({id, name, image, price, quantity, userId, guestId, guestBasket, cartId }) => {
+const BasketProducts = ({id, name, price, quantity, image, description }) => {
 
     const dispatch = useDispatch();
-    const basketProducts = useSelector(selectBasketProducts);
-
-    let basketToUse = userId ? basketProducts : guestBasket;
+    const guestBasket = useSelector(selectGuestBasket);
+    const guestId = useSelector(selectGuestId);
+    const userId = useSelector(selectUserId);
+    const cartId = useSelector(selectCartId);
 
     useEffect(() => {
         if (guestId) localStorage.setItem(guestId, JSON.stringify(guestBasket));
     },[guestBasket, guestId]);
 
+
     const incrementProduct = (userId, cartId, id) => {
-        
-        userId ? dispatch(incrementBasketProduct({userId: userId, cartId: cartId, productId: id})) : dispatch(setGuestBasket()); 
-    }
+        if (userId) {
+            dispatch(incrementBasketProduct({userId: userId, cartId: cartId, productId: id}))
+            .then(() => {
+                dispatch(getBasketByCustId(userId));
+                dispatch(getBasketProductsByCustId(userId));
+            })
+        } else {
+            dispatch(incrementGuestBasketProduct(id));
+        } 
+    }   
         
 
-    const decrementProduct = (userId, id, array) => {
-
-        let basket = array.map(product => {
-            if (product.product_id === id && product.quantity > 1) {
-                return {...product, quanity: product.quantity - 1} 
-            } else if (product.product_id === id && !product.quantity > 1) {
-                return console.log('item removed');
-                //return removeGuestBasketProductHandler(id);
-            }else {
-                return {...product};
+    const decrementProduct = (userId, cartId, id) => {
+        if (userId) {
+            quantity < 2 ? removeUserBasketProductHandler({userId: userId, cartId: cartId, productId: id}) : dispatch(decrementBasketProduct({userId: userId, cartId: cartId, productId: id}))
+            .then(() => {
+                dispatch(getBasketByCustId(userId));
+                dispatch(getBasketProductsByCustId(userId));
+            })
+            
+        } else {
+            if (quantity < 2) {
+                removeGuestBasketProductHandler(id)
+            } else {
+                dispatch(decrementGuestBasketProduct(id));
             }
-        });
-        console.log(basket);
-        //userId ? dispatch(selectBasketProducts(basket)) : dispatch(setGuestBasket(basket));   
+            
+        } 
     }
 
     const removeGuestBasketProductHandler = (id) => {
@@ -67,9 +79,9 @@ const BasketProducts = ({id, name, image, price, quantity, userId, guestId, gues
             <p id='product-name'>{name}</p>
             <p id='product-price'>{price}</p>
             <p id='product-quantity'>{quantity}</p>
-            <button onClick={() => incrementProduct(userId, id, basketToUse)}>+</button>
-            <button onClick={removeBasketProductHandler}>X</button>
-            <button onClick={() => decrementProduct(userId, id, basketToUse)}>-</button>
+            <button onClick={() => incrementProduct(userId, cartId, id)}>+</button>
+            <button onClick={() => removeBasketProductHandler(userId)}>X</button>
+            <button onClick={() => decrementProduct(userId, cartId, id)}>-</button>
             
         </div>
 

@@ -53,11 +53,8 @@ const LoginDetails = ({userId}) => {
     return (
         <div className='form'>
             <h1>Login Details</h1>
-            {loginDetails && loginDetails.map(detail => 
-                <div key={detail.contact_id}>
-                    <p>Email: {detail.email}</p>
-                </div>
-            )}
+            <p>Email: {loginDetails.email}</p>
+                
             {!changePasswordClick &&
             <button onClick={() => setChangePasswordClick(true)}>Change Password</button>
             }

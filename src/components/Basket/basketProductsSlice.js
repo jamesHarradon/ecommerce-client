@@ -11,7 +11,7 @@ export const getBasketProductsByCustId = createAsyncThunk(
 export const addBasketProducts = createAsyncThunk(
     'basketProducts/addBasketProducts', async (data) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${data.cartId}/${data.productId}`, {
+            const response = await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${data.cartId}/${data.productId}/1`, {
                 method: 'POST',
                 credentials: 'include'
             });

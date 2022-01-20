@@ -25,9 +25,9 @@ export default function Searchbar () {
     };
 
     return (
-        <div>
+        <div className='searchbar'>
             <form onSubmit={onSubmitHandler}>
-                <input id='searchbar' type='search' placeholder="Search products" onChange={(e) => onChangeHandler(e)}></input>
+                <input id='searchbar-input' type='search' placeholder="Search products" onChange={(e) => onChangeHandler(e)}></input>
             </form>
         </div>
         

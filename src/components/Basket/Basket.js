@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getBasketProductsByCustId, selectBasketProducts} from './basketProductsSlice'
 import { getBasketByCustId, selectBasket } from "./basketSlice";
@@ -10,22 +10,22 @@ import { selectIsLoggedIn } from "../../userSlice";
 
 const Basket = ({userId, guestId, guestBasket, cartId }) => {
 
-    
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
+    
     const basket = useSelector(selectBasket);
     const basketProducts = useSelector(selectBasketProducts);
     const contacts = useSelector(selectContacts);
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
-    const email = isLoggedIn ? contacts[0].email : null;
+    let email = contacts && isLoggedIn ? contacts[0].email : null;
     const bodyToSend = { products: basketProducts, email: email}
 
-    let basketToUse = guestId ? guestBasket || [] : basketProducts || [];
+    let basketToUse = guestId ? guestBasket : basketProducts;
     
     let guestTotal;
     if (guestBasket.length > 0) {
-        guestTotal = guestBasket.map(product => product.price_per_unit.split('').splice(1).join('')).reduce((cont, champ) => parseFloat(cont) + parseFloat(champ));
+        guestTotal = guestBasket.map(product => product.quantity * parseFloat(product.price_per_unit.split('').splice(1).join(''))).reduce((cont, champ) => cont + champ);
     }
     
     useEffect(() => {
@@ -37,6 +37,10 @@ const Basket = ({userId, guestId, guestBasket, cartId }) => {
     },[])
 
     const checkoutHandler = async (data) => {
+        if (contacts.length < 1) {
+            alert('Please complete contact details before checking out.');
+            return navigate('/account/contact');
+        }
         try {
             const response = await fetch(`http://localhost:4000/api/checkout/${userId}`, {
                 method: 'POST',
@@ -76,7 +80,7 @@ const Basket = ({userId, guestId, guestBasket, cartId }) => {
             }
             <div>
                 {basketToUse.length > 0 && 
-                    basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} image={product.image} price={product.price_per_unit} quantity={product.quantity} userId={userId} guestId={guestId} guestBasket={guestBasket} cartId={cartId} />
+                    basketToUse.map(product => <BasketProducts key={product.product_id} id={product.product_id} name={product.product_name} price={product.price_per_unit} quantity={product.quantity} image={product.image} description={product.description}  />
                 )}
                 {basketToUse.length < 1 && 
                     <h2>Your Basket is Empty</h2>

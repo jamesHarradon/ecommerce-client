@@ -15,6 +15,9 @@ const Orders = ({ userId }) => {
     return (
         <div className='orders'>
             <h1>Orders</h1>
+            {!orders &&
+                <p>No Orders to Display.</p>
+            }
             {orders && orders.map(order => 
                 <div className='order' key={order.id} id={order.id}>
                     <p>Order ID: {order.id}</p>

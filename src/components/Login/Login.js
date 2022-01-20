@@ -75,7 +75,7 @@ const Login = ({guestId, guestBasket}) => {
                 const id = await res.json()
                 loginFunc(id, guestBasket, guestId);
                 navigate('/');
-            } else if (res.status === 403) {
+            } else if (res.status === 401) {
                 alert('Login Unsuccessful. Please Try Again.')
             }
         } catch (err) {
