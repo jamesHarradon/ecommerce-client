@@ -10,8 +10,9 @@ export const getProducts = createAsyncThunk(
                 return json.text()
             } else {
                 // cant seem to use rejectWithValue unless there is a value for arg
-                const errorMsg = await response.json();
-                return errorMsg.text();
+                const responseClone = response.clone();
+
+                console.log(responseClone.text());
                 //throw new Error(errorMsg);
             }      
         } catch (err) {
