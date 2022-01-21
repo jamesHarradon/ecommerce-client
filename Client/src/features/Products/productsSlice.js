@@ -6,14 +6,11 @@ export const getProducts = createAsyncThunk(
             const response = await fetch('/api/products');
             if (response.ok) {
                 const json = await response.json();
-                //return json;
-                return json.text()
+                return json;
             } else {
                 // cant seem to use rejectWithValue unless there is a value for arg
-                const responseClone = response.clone();
-
-                console.log(responseClone.text());
-                //throw new Error(errorMsg);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }      
         } catch (err) {
             console.log(err)
