@@ -117,8 +117,7 @@ const Login = () => {
                 <input type='password' id='password' name='password' placeholder="Password" {...register('password')} className={`form-control ${errors.password ? 'is-invalid' : ''}`}></input>
                 <div className='invalid-feedback'>{errors.password?.message}</div>
 
-                <br></br>
-                <button type='submit' className='btn'>Login</button>
+                <button type='submit' className='login-btn'>Login</button>
 
             </form>
             <div>

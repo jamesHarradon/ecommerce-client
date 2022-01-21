@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getContacts = createAsyncThunk(
-    'contacts/getContacts', async (id) => {
+    'contacts/getContacts', async (id, { rejectWithValue }) => {
         try {
             const response = await fetch(`http://localhost:4000/api/customer/data/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
             } else {
-                throw new Error('System Error')
+                rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err);
@@ -34,6 +36,8 @@ export const addContacts = createAsyncThunk(
                 return json;
             } else {
                 rejectWithValue([]);
+                const errorMsg = await response.json()
+                throw new Error(errorMsg);
             }
         } catch (err) {
             console.log(err)

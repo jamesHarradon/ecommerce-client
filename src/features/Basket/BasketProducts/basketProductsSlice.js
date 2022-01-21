@@ -10,6 +10,7 @@ export const getBasketProductsByCustId = createAsyncThunk(
             }else {
                 rejectWithValue([]);
                 const errorMsg = await response.json()
+                console.log(errorMsg);
                 throw new Error(errorMsg);
             }
         } catch (err) {

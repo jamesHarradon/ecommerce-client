@@ -41,7 +41,7 @@ const Basket = () => {
     },[])
 
     const checkoutHandler = async (data) => {
-        if (contacts.length < 1) {
+        if (!contacts || contacts.length < 1) {
             alert('Please complete contact details before checking out.');
             return navigate('/account/contact');
         }

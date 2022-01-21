@@ -138,7 +138,7 @@ const Register = () => {
                     <input type='password' id='confirmPassword' name='confirmPassword' placeholder="Confirm Password" {...register('confirmPassword')} className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}></input>
                     <div className='invalid-feedback'>{errors.confirmPassword?.message}</div>
                 </div>
-                <button type='submit' className='btn'>Register</button>    
+                <button type='submit' className='register-btn'>Register</button>    
             </form>
             <div>
                 <GoogleLogin
