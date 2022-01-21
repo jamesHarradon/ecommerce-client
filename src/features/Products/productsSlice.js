@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getProducts = createAsyncThunk(
     'products/getProducts', async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/products');
+            const response = await fetch('/api/products');
             if (response.ok) {
                 const json = await response.json();
                 return json;
@@ -20,7 +20,7 @@ export const getProducts = createAsyncThunk(
 export const getProductsByTerm = createAsyncThunk(
     'products/getProductsByTerm', async (term, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/products/search/${term}`);
+            const response = await fetch(`/api/products/search/${term}`);
             if (response.ok) {
                 const json = await response.json();
                 return json;

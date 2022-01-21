@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getBasketProductsByCustId = createAsyncThunk(
     'basketProducts/getBasketProductsByCustId', async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/cart/products/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
@@ -22,7 +22,7 @@ export const getBasketProductsByCustId = createAsyncThunk(
 export const addBasketProducts = createAsyncThunk(
     'basketProducts/addBasketProducts', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/add/${data.userId}/${data.cartId}/${data.productId}/1`, {
+            const response = await fetch(`/api/cart/products/add/${data.userId}/${data.cartId}/${data.productId}/1`, {
                 method: 'POST',
                 credentials: 'include'
             });
@@ -44,7 +44,7 @@ export const addBasketProducts = createAsyncThunk(
 export const incrementBasketProduct = createAsyncThunk(
     'basketProducts/incrementBasketProduct', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/increment/${data.userId}/${data.cartId}/${data.productId}`, {
+            const response = await fetch(`/api/cart/products/increment/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'PUT',
                 credentials: 'include'
             });
@@ -65,7 +65,7 @@ export const incrementBasketProduct = createAsyncThunk(
 export const decrementBasketProduct = createAsyncThunk(
     'basketProducts/decrementBasketProduct', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/decrement/${data.userId}/${data.cartId}/${data.productId}`, {
+            const response = await fetch(`/api/cart/products/decrement/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'PUT',
                 credentials: 'include'
             });
@@ -86,7 +86,7 @@ export const decrementBasketProduct = createAsyncThunk(
 export const deleteBasketProducts = createAsyncThunk(
     'basketProducts/deleteBasketProducts', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/products/delete/${data.userId}/${data.cartId}/${data.productId}`, {
+            const response = await fetch(`/api/cart/products/delete/${data.userId}/${data.cartId}/${data.productId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });

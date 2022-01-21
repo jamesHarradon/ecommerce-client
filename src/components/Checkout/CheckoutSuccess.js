@@ -20,7 +20,7 @@ const CheckoutSuccess = () => {
     const onClickHandler = async () => {
         try {
             //creates order from cart and deletes cart from db
-            const response = await fetch(`http://localhost:4000/api/orders/new/${userId}/${cartId}`, {
+            const response = await fetch(`/api/orders/new/${userId}/${cartId}`, {
                 method: 'POST', 
                 credentials: 'include'
             });

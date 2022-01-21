@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getNewCartId= createAsyncThunk(
     'cartId/getNewCartId', async (id, { rejectWithValue }) => {
         try {
-            const newCartResponse = await fetch(`http://localhost:4000/api/cart/new/${id}`, {
+            const newCartResponse = await fetch(`/api/cart/new/${id}`, {
                 method: 'POST',
                 credentials: 'include'
             });
@@ -27,7 +27,7 @@ export const getNewCartId= createAsyncThunk(
 export const setCartId= createAsyncThunk(
     'cartId/setCartId', async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/cart/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const cart = await response.json();
                 return cart.id;

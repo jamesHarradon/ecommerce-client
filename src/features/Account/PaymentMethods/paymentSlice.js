@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getPaymentMethod = createAsyncThunk(
     'paymentMethod/getPaymentMethod', async (id) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/payments/data/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/payments/data/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
@@ -20,7 +20,7 @@ export const getPaymentMethod = createAsyncThunk(
 export const addPaymentMethod = createAsyncThunk(
     'paymentMethod/addPaymentMethod', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/payments/data/new/${data.userId}`, {
+            const response = await fetch(`/api/payments/data/new/${data.userId}`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

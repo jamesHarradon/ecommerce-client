@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const  getLoginDetails = createAsyncThunk(
     'loginDetails/getLoginDetails', async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/customer/data/email/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/customer/data/email/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
@@ -21,7 +21,7 @@ export const  getLoginDetails = createAsyncThunk(
 export const changePassword = createAsyncThunk(
     'password/changePassword', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/auth/change-password/${data.userId}`, {
+            const response = await fetch(`/api/auth/change-password/${data.userId}`, {
                 method: 'PUT', 
                 mode: 'cors',
                 credentials: 'include',

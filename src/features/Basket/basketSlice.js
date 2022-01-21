@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getBasketByCustId = createAsyncThunk(
     'basket/getBasketByCustId', async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/cart/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/cart/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;

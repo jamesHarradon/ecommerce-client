@@ -10,7 +10,7 @@ const Logout = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/auth/logout', {method: 'POST', credentials: 'include'});
+            const response = await fetch('/api/auth/logout', {method: 'POST', credentials: 'include'});
             if(response.ok) {
                 dispatch(logout()); 
                 // the above 'logout' action is set in userSlice but defined in store.

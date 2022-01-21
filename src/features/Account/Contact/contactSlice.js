@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const getContacts = createAsyncThunk(
     'contacts/getContacts', async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/customer/data/${id}`, {credentials: 'include'});
+            const response = await fetch(`/api/customer/data/${id}`, {credentials: 'include'});
             if (response.ok) {
                 const json = await response.json();
                 return json;
@@ -21,7 +21,7 @@ export const getContacts = createAsyncThunk(
 export const addContacts = createAsyncThunk(
     'contacts/addContacts', async (data, { rejectWithValue }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/customer/contact/data/new/${data.userId}`, { 
+            const response = await fetch(`/api/customer/contact/data/new/${data.userId}`, { 
                 method: 'POST', 
                 mode: 'cors',
                 credentials: 'include',

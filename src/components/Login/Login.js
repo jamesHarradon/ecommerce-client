@@ -56,12 +56,12 @@ const Login = () => {
         let url;
         let data;
         if (response.profileObj) {
-            url = 'http://localhost:4000/api/auth/google/login/success';
+            url = '/api/auth/google/login/success';
             const { givenName, familyName, email, googleId } = response.profileObj;
             data = { first_name: givenName, last_name: familyName, email: email, google_id: googleId};
 
         } else {
-            url = 'http://localhost:4000/api/auth/login';
+            url = '/api/auth/login';
             data = response;
         }
         try {
