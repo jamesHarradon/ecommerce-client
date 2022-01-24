@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import GoogleLogin from 'react-google-login';
 
-import { setUserId, setLoggedIn, setCartId, getNewOrExistingCartId } from "../../userSlice";
+import { setUserId, setLoggedIn, getNewOrExistingCartId } from "../../userSlice";
 import { getBasketByCustId } from "../../features/Basket/basketSlice";
 import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
 import { setGuestId, setGuestBasketToDB, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
