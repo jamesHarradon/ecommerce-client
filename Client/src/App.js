@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar/Navbar';
 import Account from './features/Account/Account';
@@ -15,9 +15,12 @@ import Register from './components/Register/Register'
 import ErrorPage from './components/Error/error';
 import Logout from './components/Logout/Logout';
 import CheckoutSuccess from './components/Checkout/CheckoutSuccess';
+import { useState } from 'react';
 
 
 function App() {
+
+  const [ timeoutId, setTimeoutId ] = useState(null);
 
   return (
     <Router>
@@ -37,9 +40,9 @@ function App() {
             <Route path='/account/paymentmethods' element={<PaymentMethods />} />
             <Route path='/basket' element={<Basket />} />
             <Route path='/checkout-success' element={<CheckoutSuccess />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/logout' element={<Logout />} />
-            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login setTimeoutId={setTimeoutId} />} />
+            <Route path='/logout' element={<Logout timeoutId={timeoutId} />} />
+            <Route path='/register' element={<Register setTimeoutId={setTimeoutId}  />} />
             <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<div><p>Nothing Here!</p></div>} /> 
           </Routes>

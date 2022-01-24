@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import GoogleLogin from 'react-google-login';
 
-import { setLoggedIn, setUserId, getNewCartId } from "../../userSlice";
+import { setLoggedIn, setUserId, getNewOrExistingCartId } from "../../userSlice";
 import { setGuestBasketToDB, setGuestId, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
 import { getBasketByCustId } from "../../features/Basket/basketSlice";
 import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
@@ -16,7 +16,7 @@ import { getLoginDetails } from "../../features/Account/LoginDetails/loginDetail
 import { getOrders } from "../../features/Account/Orders/ordersSlice";
 
 
-const Register = () => {
+const Register = ({setTimeoutId}) => {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,13 +27,12 @@ const Register = () => {
     const loginFunc = (id, guestBasket, guestId) => {
         dispatch(setUserId(id))
         dispatch(setLoggedIn(true));
-        dispatch(setGuestId(null));
-        //account data
+        //gets account data
         dispatch(getContacts(id));
         dispatch(getLoginDetails(id));
         dispatch(getOrders(id));
         dispatch(getPaymentMethod(id));
-        
+        // sets basket
         if (guestBasket.length > 0) {
             dispatch(setGuestBasketToDB({userId: id, guestBasket: guestBasket}))
                 .then(() => {
@@ -44,12 +43,13 @@ const Register = () => {
         } else {
             dispatch(setGuestId(null)); 
             localStorage.removeItem(guestId);
-            dispatch(getNewCartId(id));
+            dispatch(getNewOrExistingCartId(id));
         }
         dispatch(getBasketByCustId(id))
         dispatch(getBasketProductsByCustId(id))
         //expires same time as jwt - 60mins - resets redux state to initial
-        setTimeout(() => navigate('/logout'), 3600000)
+        const timerId = window.setTimeout(() => navigate('/logout'), 3600000);
+        setTimeoutId(timerId);
     }
 
     const handleRegister = async (response) => {

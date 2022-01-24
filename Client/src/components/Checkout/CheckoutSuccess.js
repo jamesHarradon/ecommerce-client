@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getNewCartId, selectCartId, selectUserId } from "../../userSlice";
+import { getNewOrExistingCartId, selectCartId, selectUserId } from "../../userSlice";
 import { selectContacts } from "../../features/Account/Contact/contactSlice";
 import { getOrders } from '../../features/Account/Orders/ordersSlice'
 import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
@@ -28,7 +28,7 @@ const CheckoutSuccess = () => {
                 // updates orders
                 dispatch(getOrders(userId));
                 // creates new empty basket in db and updates state
-                dispatch(getNewCartId(userId));
+                dispatch(getNewOrExistingCartId(userId));
                 dispatch(getBasketByCustId(userId));
                 dispatch(getBasketProductsByCustId(userId));
                 navigate('/account/orders');

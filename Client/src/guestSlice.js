@@ -18,7 +18,7 @@ export const setGuestBasketToDB = createAsyncThunk(
             if(existingCart && !existingCart.total_cost) cartId = existingCart.id;
 
             if (!existingCart) {
-                //creates new carts and gets cartId
+                //creates new cart and gets cartId
                 const newCart = await fetch(`/api/cart/new/${data.userId}`, {method: 'POST', credentials: 'include'});
                 cartId = newCart.id 
             };

@@ -5,17 +5,17 @@ import { logout } from "../../userSlice";
 
 
 // add logout fetch to this to get rid of token
-const Logout = () => {
+const Logout = ({timeoutId}) => {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
         try {
             const response = await fetch('/api/auth/logout', {method: 'POST', credentials: 'include'});
             if(response.ok) {
+                window.clearTimeout(timeoutId);
                 dispatch(logout()); 
                 // the above 'logout' action is set in userSlice but defined in store.
                 // when dispatched, it resets all redux state to initial state
-                
             } 
 
         } catch (err) {

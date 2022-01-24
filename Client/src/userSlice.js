@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 
-export const getNewCartId= createAsyncThunk(
-    'cartId/getNewCartId', async (id, { rejectWithValue }) => {
+export const getNewOrExistingCartId = createAsyncThunk(
+    'cartId/getNewOrExistingCartId', async (id, { rejectWithValue }) => {
         try {
             const newCartResponse = await fetch(`/api/cart/new/${id}`, {
                 method: 'POST',
@@ -72,16 +72,16 @@ const userSlice = createSlice({
             state.isLoading = false;
             state.hasFailed = true;
         },
-        [getNewCartId.pending]: (state, action) => {
+        [getNewOrExistingCartId.pending]: (state, action) => {
             state.isLoading = true;
             state.hasFailed = false;
         },
-        [getNewCartId.fulfilled]: (state, action) => {
+        [getNewOrExistingCartId.fulfilled]: (state, action) => {
             state.cartId = action.payload;
             state.isLoading = false;
             state.hasFailed = false;
         },
-        [getNewCartId.rejected]: (state, action) => {
+        [getNewOrExistingCartId.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasFailed = true;
         }

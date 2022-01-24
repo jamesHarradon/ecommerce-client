@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import GoogleLogin from 'react-google-login';
 
-import { setUserId, setLoggedIn, setCartId } from "../../userSlice";
+import { setUserId, setLoggedIn, setCartId, getNewOrExistingCartId } from "../../userSlice";
 import { getBasketByCustId } from "../../features/Basket/basketSlice";
 import { getBasketProductsByCustId } from "../../features/Basket/BasketProducts/basketProductsSlice";
 import { setGuestId, setGuestBasketToDB, setGuestBasket, selectGuestId, selectGuestBasket } from "../../guestSlice";
@@ -17,7 +17,8 @@ import { getPaymentMethod } from "../../features/Account/PaymentMethods/paymentS
 
 
 
-const Login = () => {
+
+const Login = ({setTimeoutId}) => {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Login = () => {
     const loginFunc = (id, guestBasket, guestId) => {
         dispatch(setUserId(id))
         dispatch(setLoggedIn(true));
-        dispatch(setCartId(id));
+        // gets account data
         dispatch(getContacts(id));
         dispatch(getLoginDetails(id));
         dispatch(getOrders(id));
@@ -44,11 +45,13 @@ const Login = () => {
         } else {
             dispatch(setGuestId(null)); 
             localStorage.removeItem(guestId);
+            dispatch(getNewOrExistingCartId(id));
         }
         dispatch(getBasketByCustId(id));
         dispatch(getBasketProductsByCustId(id));
         //expires same time as jwt - 60mins - resets redux state to initial
-        setTimeout(() => navigate('/logout'), 3600000);
+        const timerId = window.setTimeout(() => navigate('/logout'), 3600000);
+        setTimeoutId(timerId);
     }
 
     const handleLogin = async (response) => {
