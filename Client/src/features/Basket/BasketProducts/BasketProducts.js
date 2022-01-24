@@ -77,7 +77,9 @@ const BasketProducts = ({id, name, price, quantity, image, description }) => {
         <div className="basket-product" key={id} id={name}>
             <p id='product-name'>{name}</p>
             <div className='basket-product-flex'>
-                <img src={image} alt={name}/>
+                <div className='image-container'>
+                    <img className='product-image' src={image} alt={name}/>
+                </div>
                 <div className="basket-product-elements">
                     <p id='product-price'>{price}</p>
                     <p id='product-quantity'>Quantity: {quantity}</p>

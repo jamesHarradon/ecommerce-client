@@ -28,7 +28,7 @@ const Logout = ({timeoutId}) => {
     });
 
     return (
-        <div>
+        <div className='logout'>
             <h1>
                 You have successfully logged out
             </h1>

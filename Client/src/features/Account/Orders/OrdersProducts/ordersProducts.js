@@ -27,7 +27,7 @@ const OrdersProducts = () => {
         <div>
             <h1>Order No. {params.id}</h1>
             <div className='order-flex'>
-                <h3><b>Order Total: {orderTotal}</b></h3>
+                <h3>Order Total: {orderTotal}</h3>
                 <h3>Date/Time: {orderDate}</h3>
                 <button onClick={() => navigate('/account/orders')}>All Orders</button>
             </div>
@@ -35,12 +35,14 @@ const OrdersProducts = () => {
                 <div className='orders-product' key={product.product_id}>
                     <p>{product.product_name}</p>
                     <div className='orders-product-flex'>
-                    <img src={product.image} alt={product.product_name}></img>
-                        <div className='orders-product-elements'>
-                            <p>Cost: {product.price_per_unit}</p>
-                            <p>Quantity: {product.quantity}</p>
-                            <p>Total: {product.total_cost}</p>
+                        <div className='image-container'>
+                            <img className='product-image' src={product.image} alt={product.product_name}></img>
                         </div>
+                            <div className='orders-product-elements'>
+                                <p>Cost: {product.price_per_unit}</p>
+                                <p>Quantity: {product.quantity}</p>
+                                <p>Total: {product.total_cost}</p>
+                            </div>
                     </div>  
                 </div>
             ))}

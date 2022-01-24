@@ -52,7 +52,7 @@ const Contact = () => {
 
     return (
         <div className='contact-container'>
-            <h1>Contact</h1>
+            <h1>Contact Details</h1>
             {contacts && contacts.map(contact => 
                 <div className="contact" key={contact.contact_id} id={contact.contact_id}>
                     <p>{contact.first_name} {contact.last_name}</p>
