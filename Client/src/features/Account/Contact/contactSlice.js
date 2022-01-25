@@ -52,11 +52,7 @@ const contactSlice = createSlice({
         hasFailed: false,
         contacts: []
     },
-    reducers: {
-        deleteContacts(state, action) {
-            state.contacts = action.payload
-        },
-    },  
+      
     extraReducers: {
         [getContacts.pending]: (state, action) => {
             state.isLoading = true;

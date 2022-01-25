@@ -400,7 +400,7 @@ button {
 
 @media only screen and (max-width: 500px) {
   #main {
-    top: 20vh;
+    top: 15vh;
     padding-bottom: 40px;
   }
   

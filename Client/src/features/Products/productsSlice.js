@@ -72,6 +72,7 @@ const productsSlice = createSlice({
     }
 })
 
+
 export const selectIsLoading = (state) => state.products.isLoading;
 export const selectHasFailed = (state) => state.products.hasFailed;
 export const selectProducts = (state) => state.products.products;

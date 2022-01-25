@@ -26,6 +26,7 @@ export default function Searchbar () {
             if (term === '') return dispatch(getProducts());
             dispatch(getProductsByTerm(term));
         }
+        
     };
 
     return (
