@@ -83,7 +83,7 @@ const Login = ({setTimeoutId}) => {
                 loginFunc(id, guestBasket, guestId);
                 navigate('/');
             } else if (res.status === 401) {
-                alert('Login Unsuccessful. Please Try Again.')
+                alert('Login Unsuccessful. Please Try Again Or Login With Google.')
             }
         } catch (err) {
             console.log(err);
