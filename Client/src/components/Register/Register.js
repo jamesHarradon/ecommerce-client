@@ -63,7 +63,7 @@ const Register = ({setTimeoutId}) => {
 
         } else {
             url = '/api/customer/register';
-            data = response;
+            data = {...response, google_id: null};
         }
         try {
             const res = await fetch(url, {
@@ -75,7 +75,6 @@ const Register = ({setTimeoutId}) => {
                 },
                 body: JSON.stringify(data),
             });
-
             if (res.ok) {
                 const id = await res.json()
                 loginFunc(id, guestBasket, guestId);
@@ -84,6 +83,8 @@ const Register = ({setTimeoutId}) => {
                 //if user already exists in the db
                 alert('You already have an account, please login to continue');
                 navigate('/login');
+            } else {
+                throw new Error('Internal Service Error');
             }
         } catch (err) {
             console.log(err);
