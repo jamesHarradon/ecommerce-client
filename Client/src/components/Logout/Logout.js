@@ -12,10 +12,15 @@ const Logout = ({timeoutId}) => {
         try {
             const response = await fetch('/api/auth/logout', {method: 'POST', credentials: 'include'});
             if(response.ok) {
+                
+                //clears timeout for logout after 1hr
                 window.clearTimeout(timeoutId);
-                dispatch(logout()); 
-                // the above 'logout' action is set in userSlice but defined in store.
+                // the below 'logout' action is set in userSlice but defined in store.
                 // when dispatched, it resets all redux state to initial state
+                dispatch(logout()); 
+                //removes redux state in local storage to stop rehydrate
+                localStorage.removeItem('persist:root');
+                
             } 
 
         } catch (err) {
