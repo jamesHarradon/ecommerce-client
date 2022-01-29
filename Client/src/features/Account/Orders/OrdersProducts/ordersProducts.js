@@ -27,7 +27,7 @@ const OrdersProducts = () => {
         <div>
             <h1>Order No. {params.id}</h1>
             <div className='order-flex'>
-                <h3>Order Total: {orderTotal}</h3>
+                <h3>Order Total: £{orderTotal}</h3>
                 <h3>Date/Time: {orderDate}</h3>
                 <button onClick={() => navigate('/account/orders')}>All Orders</button>
             </div>
@@ -39,9 +39,9 @@ const OrdersProducts = () => {
                             <img className='product-image' src={product.image} alt={product.product_name}></img>
                         </div>
                             <div className='orders-product-elements'>
-                                <p>Cost: {product.price_per_unit}</p>
+                                <p>Cost: £{product.price_per_unit}</p>
                                 <p>Quantity: {product.quantity}</p>
-                                <p>Total: {product.total_cost}</p>
+                                <p>Total: £{product.total_cost}</p>
                             </div>
                     </div>  
                 </div>
