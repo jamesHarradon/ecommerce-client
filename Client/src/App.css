@@ -294,7 +294,12 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(223, 223, 223);
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 4px;
+  border-image-source: linear-gradient(to right, rgb(154, 243, 236), rgb(56, 168, 159));
+  box-shadow: 3px 3px 3px rgb(223, 223, 223);
+  
   width: 50%;
   
   margin: 10px auto;
