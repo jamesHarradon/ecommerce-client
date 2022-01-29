@@ -72,7 +72,7 @@ const Basket = () => {
             <div className="basket-flex"> 
                 
                 { basketProducts.length > 0 && 
-                    <h3 key='total'>Total: {basket.total_cost}</h3>
+                    <h3 key='total'>Total: £{basket.total_cost}</h3>
                 }
                 { guestBasket.length > 0 && 
                     <h3>Total: £{guestTotal}</h3>

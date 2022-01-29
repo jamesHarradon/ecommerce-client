@@ -25,7 +25,7 @@ const Orders = () => {
                     <div className='order'  id={order.id}>
                         <p>Order ID: {order.id}</p>
                         <p>Order Date/Time: {order.order_date.split('').splice(0, 19)} </p>
-                        <p>Total Cost: {order.total_cost} </p>
+                        <p>Total Cost: £{order.total_cost} </p>
                     </div>
                 </Link>
             )}

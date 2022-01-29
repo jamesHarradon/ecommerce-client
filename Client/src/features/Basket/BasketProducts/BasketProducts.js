@@ -81,7 +81,7 @@ const BasketProducts = ({id, name, price, quantity, image, description }) => {
                     <img className='product-image' src={image} alt={name}/>
                 </div>
                 <div className="basket-product-elements">
-                    <p id='product-price'>{price}</p>
+                    <p id='product-price'>£{price}</p>
                     <p id='product-quantity'>Quantity: {quantity}</p>
                     <button onClick={() => incrementProduct(userId, cartId, id)}>+</button>
                     <button onClick={() => removeBasketProductHandler(userId)}>Remove</button>

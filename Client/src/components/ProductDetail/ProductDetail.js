@@ -20,7 +20,7 @@ const ProductDetail = () => {
                     <h2>{data.product_name}</h2>
                     <img src={data.image} alt={data.product_name}></img>
                     <p className='description'>{data.description}</p>
-                    <p>{data.price_per_unit}</p>
+                    <p>£{data.price_per_unit}</p>
                 </div>
             ))}
             <button onClick={() => navigate('/')}>Back</button>
