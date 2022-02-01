@@ -29,7 +29,7 @@ const Basket = () => {
     
     let guestTotal;
     if (guestBasket.length > 0) {
-        guestTotal = guestBasket.map(product => product.quantity * parseFloat(product.price_per_unit.split('').splice(1).join(''))).reduce((cont, champ) => cont + champ);
+        guestTotal = guestBasket.map(product => product.quantity * parseFloat(product.price_per_unit)).reduce((cont, champ) => cont + champ);
     }
     
     useEffect(() => {
