@@ -34,7 +34,7 @@ const Products = () => {
                 <img id='loading-icon' src={loadingIcon} alt='loading icon'></img>
             }
             {productsToMap.map(product => <Product key={product.id} productId={product.id} name={product.product_name} price={product.price_per_unit} image={product.image} description={product.description} />)}
-            {!isLoading && productsToMap.length === 0 && 
+            {!isLoading && productsToMap.length === 0 && term && 
                 <h1 className='lone-header'>No Results Found</h1>
             }
             
