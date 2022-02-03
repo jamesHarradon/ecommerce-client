@@ -5,9 +5,6 @@
   "dependencies": {
     "@hookform/resolvers": "^2.8.5",
     "@reduxjs/toolkit": "^1.7.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "eslint-config-react-app": "^7.0.0",
     "luxon": "^2.3.0",
     "nanoid": "^3.1.30",
@@ -24,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -42,5 +39,21 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/plugin-transform-runtime": "^7.16.10",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "babel-jest": "^27.4.6",
+    "msw": "^0.36.8"
+  },
+  "jest": {
+    "moduleNameMapper": {
+         "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/mocks/fileMock.js",
+         "\\.(css|less)$": "<rootDir>/src/mocks/fileMock.js"
+    },
+    "resetMocks": true
+   }
 }
