@@ -124,6 +124,10 @@ input {
 
 /*Multi use*/
 
+.lone-header {
+  margin: 10vh !important;
+}
+
 .basket-flex, .order-flex {
   display: flex;
   justify-content: space-between;
