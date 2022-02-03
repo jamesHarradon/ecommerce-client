@@ -39,14 +39,19 @@ const Register = ({setTimeoutId}) => {
                     dispatch(setGuestId(null)); 
                     dispatch(setGuestBasket([]));
                     localStorage.removeItem(guestId);
+                    dispatch(getBasketByCustId(id))
+                    dispatch(getBasketProductsByCustId(id))
                 } )
         } else {
             dispatch(setGuestId(null)); 
             localStorage.removeItem(guestId);
-            dispatch(getNewOrExistingCartId(id));
+            dispatch(getNewOrExistingCartId(id))
+            .then(() => {
+                dispatch(getBasketByCustId(id))
+                dispatch(getBasketProductsByCustId(id))
+            })
         }
-        dispatch(getBasketByCustId(id))
-        dispatch(getBasketProductsByCustId(id))
+        
         //expires same time as jwt - 60mins - resets redux state to initial
         const timerId = window.setTimeout(() => navigate('/logout'), 3600000);
         setTimeoutId(timerId);
