@@ -17,30 +17,17 @@ export const getProducts = createAsyncThunk(
         }   
     })
 
-export const getProductsByTerm = createAsyncThunk(
-    'products/getProductsByTerm', async (term, { rejectWithValue }) => {
-        try {
-            const response = await fetch(`/api/products/search/${term}`);
-            if (response.ok) {
-                const json = await response.json();
-                return json;
-            } else {
-                rejectWithValue([]);
-                const errorMsg = await response.json()
-                throw new Error(errorMsg);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-)
 
 const productsSlice = createSlice({
     name: 'products',
     initialState: {
         isLoading: false,
         hasFailed: false,
-        products: []
+        products: [],
+        term: null
+    },
+    reducers: {
+        setTerm: (state, action) => { state.term = action.payload }
     },
     extraReducers: {
         [getProducts.pending]: (state, action) => {
@@ -55,19 +42,6 @@ const productsSlice = createSlice({
         [getProducts.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasFailed = true;
-        },
-        [getProductsByTerm.pending]: (state, action) => {
-            state.isLoading = true;
-            state.hasFailed = false;
-        },
-        [getProductsByTerm.fulfilled]: (state, action) => {
-            state.products = action.payload;
-            state.isLoading = false;
-            state.hasFailed = false;
-        },
-        [getProductsByTerm.rejected]: (state, action) => {
-            state.isLoading = false;
-            state.hasFailed = true;
         }
     }
 })
@@ -76,5 +50,8 @@ const productsSlice = createSlice({
 export const selectIsLoading = (state) => state.products.isLoading;
 export const selectHasFailed = (state) => state.products.hasFailed;
 export const selectProducts = (state) => state.products.products;
+export const selectTerm = (state) => state.products.term;
+
+export const { setTerm } = productsSlice.actions;
 
 export default productsSlice.reducer;
