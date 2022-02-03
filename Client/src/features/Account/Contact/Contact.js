@@ -22,7 +22,10 @@ const Contact = () => {
 
     const handleAddContact = (data) => {
         dispatch(addContacts({userId: userId, ...data}))
-        .then(() => navigate('/account/contact'))
+        .then(() => {
+            dispatch(getContacts(userId));
+            navigate('/account/contact');
+        })
         .catch(() => alert('There was a problem adding contact'));
     }
 
