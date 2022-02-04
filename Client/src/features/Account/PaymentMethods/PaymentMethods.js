@@ -11,7 +11,7 @@ const PaymentMethods = () => {
 
     const [ addCard, setAddCard ] = useState(false);
     const dispatch = useDispatch();
-    const paymentMethod = useSelector(selectPaymentMethod);
+    const card = useSelector(selectPaymentMethod);
     const userId = useSelector(selectUserId);
     const dt = DateTime.now();
     const dtFormatted = dt.toString().split('').splice(0, 7).join('')
@@ -46,15 +46,14 @@ const PaymentMethods = () => {
     return (
         <div className='payment-method-container'>
             <h1>Payment Methods</h1>
-            {paymentMethod && paymentMethod.map(card => 
-                <div key={card.id}>
-                   <p>{card.card_type}</p> 
-                   <p>{card.card_number}</p> 
-                   <p>{card.expiry_date}</p> 
-                   <p>{card.name_on_card}</p>
-                </div>
-            )}
-            {!paymentMethod && !addCard && <button onClick={() => setAddCard(true)}>Add Card</button>}
+            <div key={card.id}>
+                <p>{card.card_type}</p> 
+                <p>{card.card_number}</p> 
+                <p>{card.expiry_date}</p> 
+                <p>{card.name_on_card}</p>
+            </div>
+            
+            {!card && !addCard && <button onClick={() => setAddCard(true)}>Add Card</button>}
             {addCard &&
             
             <div className='form-container'>
