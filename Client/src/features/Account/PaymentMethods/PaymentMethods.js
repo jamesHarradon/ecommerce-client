@@ -46,12 +46,15 @@ const PaymentMethods = () => {
     return (
         <div className='payment-method-container'>
             <h1>Payment Methods</h1>
-            <div key={card.id}>
+            {card.map(card => (
+                <div key={card.id}>
                 <p>{card.card_type}</p> 
                 <p>{card.card_number}</p> 
                 <p>{card.expiry_date}</p> 
                 <p>{card.name_on_card}</p>
             </div>
+            ))}
+            
             
             {!card && !addCard && <button onClick={() => setAddCard(true)}>Add Card</button>}
             {addCard &&
