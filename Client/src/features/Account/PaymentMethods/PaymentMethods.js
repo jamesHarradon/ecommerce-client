@@ -46,7 +46,7 @@ const PaymentMethods = () => {
     return (
         <div className='payment-method-container'>
             <h1>Payment Methods</h1>
-            {card.map(card => (
+            {card && card.map(card => (
                 <div key={card.id}>
                 <p>{card.card_type}</p> 
                 <p>{card.card_number}</p> 
