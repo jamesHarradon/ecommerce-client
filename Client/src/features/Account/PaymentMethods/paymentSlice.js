@@ -32,7 +32,7 @@ export const addPaymentMethod = createAsyncThunk(
                 const json = await response.json();
                 return json;
             } else {
-                rejectWithValue([]);
+                rejectWithValue({});
                 const errorMsg = await response.json()
                 throw new Error(errorMsg);
             }
@@ -47,7 +47,7 @@ const paymentSlice = createSlice({
     initialState: {
         isLoading: false,
         hasFailed: false,
-        paymentMethod: []
+        paymentMethod: {}
     },
     extraReducers: {
         [getPaymentMethod.pending]: (state, action) => {
